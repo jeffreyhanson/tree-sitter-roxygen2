@@ -15,10 +15,8 @@ export default grammar({
   rules: {
 
     document: $ => seq(
-      $._begin,
       optional($.description),
       repeat($.tag),
-      $._end,
     ),
 
     extras: _ => [
@@ -45,12 +43,7 @@ export default grammar({
       $._error_sentinel
     ],
 
-    description: $ => choice(
-      seq(
-        choice($._text),
-        repeat(choice($._text, $._inline_tag_false_positive)),
-      ),
-    ),
+    description: $ => repeat($._text),
 
     tag: $ => choice(
       // tags with single parameter and optional block parameter
@@ -63,7 +56,7 @@ export default grammar({
       // tags with multiple parameters
       seq(
         alias($.tag_name_with_multiple_parameters, $.tag_name),
-        optional(repeat($.identifier)),
+        optional(repeat1($.identifier)),
       ),
 
       // tags with block parameter
@@ -128,12 +121,6 @@ export default grammar({
     tag_name: _ => /@[a-zA-Z_]+/,
 
     _text: _ => token(prec(-1, /[^*{}@\s][^*{}\n]*([^*/{}\n][^*{}\n]*\*+)*/)),
-
-    _inline_tag_false_positive: _ => token(prec.left(1, /\{[^@}]+\}?/)),
-
-    _begin: _ => seq("/", repeat("*")),
-
-    _end: _ => "/",
 
   }
 });
