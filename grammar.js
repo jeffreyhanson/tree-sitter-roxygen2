@@ -29,7 +29,7 @@ export default grammar({
       )),
     ],
 
-    externals: $ => [
+    externals: _ => [
       $._begin,
       $._end,
       $._newline,
@@ -132,16 +132,8 @@ export default grammar({
     _inline_tag_false_positive: _ => token(prec.left(1, /\{[^@}]+\}?/)),
 
     _begin: _ => seq("/", repeat("*")),
-    _end: _ => "/",
-    _open_parenthesis: $ => alias($._external_open_parenthesis, "("),
-    _close_parenthesis: $ => alias($._external_close_parenthesis, ")"),
-    _open_brace: $ => alias($._external_open_brace, "{"),
-    _close_brace: $ => alias($._external_close_brace, "}"),
-    _open_bracket: $ => alias($._external_open_bracket, "["),
-    _close_bracket: $ => alias($._external_close_bracket, "]"),
-    _open_bracket2: $ => alias($._external_open_bracket2, "[["),
-    _close_bracket2: $ => alias($._external_close_bracket2, "]]")
 
+    _end: _ => "/",
 
   }
 });
