@@ -12,6 +12,25 @@ export default grammar({
 
   word: $ => $.identifier,
 
+  extras: $ => [
+    /\s/, // whitespace
+    $.comment,
+  ],
+
+  // externals: $ => [
+  //   $._newline,
+  //   $._raw_string_literal,
+  //   $._external_open_parenthesis,
+  //   $._external_close_parenthesis,
+  //   $._external_open_brace,
+  //   $._external_close_brace,
+  //   $._external_open_bracket,
+  //   $._external_close_bracket,
+  //   $._external_open_bracket2,
+  //   $._external_close_bracket2,
+  //   $._error_sentinel
+  // ],
+
   rules: {
 
     document: $ => seq(
@@ -19,31 +38,7 @@ export default grammar({
       repeat($.tag),
     ),
 
-    extras: _ => [
-      token(choice(
-        // Skip over "#' " or "//' " at the beginnings of lines
-        seq(/\n/, /[ \t]*/, choice("#'", "//'")),
-        /\s/,
-      )),
-    ],
-
-    externals: _ => [
-      $._begin,
-      $._end,
-      $._newline,
-      $._raw_string_literal,
-      $._external_open_parenthesis,
-      $._external_close_parenthesis,
-      $._external_open_brace,
-      $._external_close_brace,
-      $._external_open_bracket,
-      $._external_close_bracket,
-      $._external_open_bracket2,
-      $._external_close_bracket2,
-      $._error_sentinel
-    ],
-
-    description: $ => repeat($._text),
+    description: $ => repeat1($._text),
 
     tag: $ => choice(
       // tags with single parameter and optional block parameter
@@ -116,11 +111,16 @@ export default grammar({
       "@eval",
     )),
 
-    identifier: $ => /[a-zA-Z_$][a-zA-Z_$0-9]*/,
-
     tag_name: _ => /@[a-zA-Z_]+/,
 
-    _text: _ => token(prec(-1, /[^*{}@\s][^*{}\n]*([^*/{}\n][^*{}\n]*\*+)*/)),
+    identifier: $ => /[a-zA-Z_$][a-zA-Z_$0-9]*/,
+
+    comment: $ => token(choice(
+      "#'",
+      "//'"
+    )),
+
+    _text: _ => token(prec(-1, /[^\s\n]*/)),
 
   }
 });

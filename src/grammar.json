@@ -7,10 +7,6 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_begin"
-        },
-        {
           "type": "CHOICE",
           "members": [
             {
@@ -28,47 +24,15 @@
             "type": "SYMBOL",
             "name": "tag"
           }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_end"
         }
       ]
     },
     "description": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_text"
-                }
-              ]
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_text"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_inline_tag_false_positive"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ]
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_text"
+      }
     },
     "tag": {
       "type": "CHOICE",
@@ -127,7 +91,7 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "REPEAT",
+                  "type": "REPEAT1",
                   "content": {
                     "type": "SYMBOL",
                     "name": "identifier"
@@ -361,6 +325,22 @@
       "type": "PATTERN",
       "value": "[a-zA-Z_$][a-zA-Z_$0-9]*"
     },
+    "comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "#'"
+          },
+          {
+            "type": "STRING",
+            "value": "//'"
+          }
+        ]
+      }
+    },
     "_text": {
       "type": "TOKEN",
       "content": {
@@ -368,46 +348,19 @@
         "value": -1,
         "content": {
           "type": "PATTERN",
-          "value": "[^*{}@\\s][^*{}\\n]*([^*/{}\\n][^*{}\\n]*\\*+)*"
+          "value": "[^\\s\\n]*"
         }
       }
-    },
-    "_inline_tag_false_positive": {
-      "type": "TOKEN",
-      "content": {
-        "type": "PREC_LEFT",
-        "value": 1,
-        "content": {
-          "type": "PATTERN",
-          "value": "\\{[^@}]+\\}?"
-        }
-      }
-    },
-    "_begin": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "/"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "STRING",
-            "value": "*"
-          }
-        }
-      ]
-    },
-    "_end": {
-      "type": "STRING",
-      "value": "/"
     }
   },
   "extras": [
     {
       "type": "PATTERN",
       "value": "\\s"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "comment"
     }
   ],
   "conflicts": [],
