@@ -123,9 +123,9 @@ export default grammar({
       "@eval",
     )),
 
-    tag_name: _ => /@[a-zA-Z_]+/,
+    identifier: $ => /[a-zA-Z_$][a-zA-Z_$0-9]*/,
 
-    identifier: _ => /[a-zA-Z_$][a-zA-Z_$0-9]*/,
+    tag_name: _ => /@[a-zA-Z_]+/,
 
     _text: _ => token(prec(-1, /[^*{}@\s][^*{}\n]*([^*/{}\n][^*{}\n]*\*+)*/)),
 
