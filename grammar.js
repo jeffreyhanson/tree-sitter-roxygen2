@@ -17,20 +17,6 @@ export default grammar({
     $.comment,
   ],
 
-  // externals: $ => [
-  //   $._newline,
-  //   $._raw_string_literal,
-  //   $._external_open_parenthesis,
-  //   $._external_close_parenthesis,
-  //   $._external_open_brace,
-  //   $._external_close_brace,
-  //   $._external_open_bracket,
-  //   $._external_close_bracket,
-  //   $._external_open_bracket2,
-  //   $._external_close_bracket2,
-  //   $._error_sentinel
-  // ],
-
   rules: {
 
     document: $ => seq(
