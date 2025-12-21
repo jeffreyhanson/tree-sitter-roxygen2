@@ -21,6 +21,14 @@ export default grammar({
       $._end,
     ),
 
+    extras: _ => [
+      token(choice(
+        // Skip over "#' " or "//' " at the beginnings of lines
+        seq(/\n/, /[ \t]*/, choice("#'", "//'")),
+        /\s/,
+      )),
+    ],
+
     description: $ => choice(
       seq(
         choice($._text),
