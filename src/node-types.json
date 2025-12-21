@@ -1,0 +1,66 @@
+[
+  {
+    "type": "description",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "document",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "description",
+          "named": true
+        },
+        {
+          "type": "tag",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "description",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "tag_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": "/",
+    "named": false
+  },
+  {
+    "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "tag_name",
+    "named": true
+  }
+]

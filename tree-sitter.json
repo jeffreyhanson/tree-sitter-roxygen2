@@ -1,0 +1,42 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "roxygen2",
+      "camelcase": "Roxygen2",
+      "title": "roxygen2",
+      "scope": "source.roxygen2",
+      "file-types": [
+        "roxygen2"
+      ],
+      "injection-regex": "^roxygen2$",
+      "class-name": "TreeSitterRoxygen2"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "roxygen2 grammar for the tree-sitter parsing library",
+    "authors": [
+      {
+        "name": "Jeffrey Owen Hanson",
+        "email": "jeffrey.hanson@uqconnect.edu.au",
+        "url": "https://jeffrey-hanson.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/jeffreyhanson/tree-sitter-roxygen2",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "java": false,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
