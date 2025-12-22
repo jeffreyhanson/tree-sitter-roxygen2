@@ -170,7 +170,7 @@ const PREC = {
   CALL: { ASSOC: prec.right, RANK: 20 },
 }
 
-module.exports = grammar({
+export default grammar({
   name: 'roxygen2',
 
   extras: $ => [
