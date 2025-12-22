@@ -1,16 +1,5 @@
-/**
- * @file roxygen2 grammar for the tree-sitter parsing library
- * @author Jeffrey Owen Hanson <jeffrey.hanson@uqconnect.edu.au>
- * @license MIT
- */
-
-/// <reference types="tree-sitter-cli/dsl" />
-// @ts-check
-
-export default grammar({
+module.exports = grammar({
   name: "roxygen2",
-
-  word: $ => $.identifier,
 
   extras: $ => [
     /\s/, // whitespace
@@ -29,6 +18,8 @@ export default grammar({
     $._external_close_bracket2,
     $._error_sentinel
   ],
+
+  word: $ => $.identifier,
 
   rules: {
 
@@ -123,6 +114,5 @@ export default grammar({
     )),
 
     _text: _ => token(prec(-1, /[^\s\n]*/)),
-
   }
-});
+})
