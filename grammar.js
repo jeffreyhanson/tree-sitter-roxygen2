@@ -2,12 +2,15 @@ module.exports = grammar({
   name: "roxygen2",
 
   extras: $ => [
-    /\s/, // whitespace
     $.comment,
+    /\s/, // whitespace
   ],
 
   externals: $ => [
-    $._start,
+    $._start
+    $._newline,
+    $._semicolon,
+    $._raw_string_literal,
     $._external_open_parenthesis,
     $._external_close_parenthesis,
     $._external_open_brace,
@@ -102,7 +105,7 @@ module.exports = grammar({
       "@eval",
     )),
 
-    tag_name: _ => /@[a-zA-Z_]+/,
+    tag_name: $ => /@[a-zA-Z_]+/,
 
     identifier: $ => /[a-zA-Z_$][a-zA-Z_$0-9]*/,
 
