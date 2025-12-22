@@ -171,7 +171,7 @@ const PREC = {
 }
 
 module.exports = grammar({
-  name: "roxygen2",
+  name: 'roxygen2',
 
   extras: $ => [
     $.comment,
