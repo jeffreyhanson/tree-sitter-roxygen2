@@ -183,7 +183,7 @@ export default grammar({
     $._newline,
     $._semicolon,
     $._raw_string_literal,
-    // Don't use `_external` variants directly. Instead use their aliased versions.
+  //   // Don't use `_external` variants directly. Instead use their aliased versions.
     $._external_else,
     $._external_open_parenthesis,
     $._external_close_parenthesis,
@@ -193,10 +193,10 @@ export default grammar({
     $._external_close_bracket,
     $._external_open_bracket2,
     $._external_close_bracket2,
-    // If a syntax error is encountered, the first thing to occur is that our external
-    // scanner is called with all symbols marked valid. We really don't want this, so
-    // we include a sentinel external to detect this and decline to handle.
-    $._error_sentinel
+  //   // If a syntax error is encountered, the first thing to occur is that our external
+  //   // scanner is called with all symbols marked valid. We really don't want this, so
+  //   // we include a sentinel external to detect this and decline to handle.
+  //   $._error_sentinel
   ],
 
   word: $ => $.identifier,
