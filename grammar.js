@@ -2,7 +2,7 @@
 // @ts-check
 
 module.exports = grammar({
-  name: 'roxygen2',
+  name: "roxygen2",
 
   extras: $ => [
     $.comment,
@@ -31,93 +31,94 @@ module.exports = grammar({
 
     program: $ => seq(
       $._start,
-      optional($.description),
-      repeat($.tag),
+      repeat($._text),
+      // optional($.description),
+      // repeat($.tag),
     ),
 
-    description: $ => repeat1($._text),
-
-    tag: $ => choice(
-      // tags with single parameter and optional block parameter
-      seq(
-        alias($.tag_name_with_single_parameter, $.tag_name),
-        optional($.identifier),
-        optional($.description),
-      ),
-
-      // tags with multiple parameters
-      seq(
-        alias($.tag_name_with_multiple_parameters, $.tag_name),
-        optional(repeat1($.identifier)),
-      ),
-
-      // tags with block parameter
-      seq(
-        alias($.tag_name_with_block_parameter, $.tag_name),
-        optional($.description),
-      ),
-
-      // default behavior
-      seq(
-        $.tag_name,
-        optional($.description)
-      ),
-    ),
-
-    tag_name_with_single_parameter: _ => token(choice(
-      "@param",
-      "@slot",
-      "@field",
-      "@describeIn",
-      "@templateVar",
-      "@inheritDotParams",
-      "@concept",
-      "@family",
-      "@example",
-      "@inheritParams",
-      "@order",
-      "@rdname",
-      "@includeRmd",
-      "@template",
-      "@backref",
-    )),
-
-    tag_name_with_multiple_parameters: _ => token(choice(
-      "@keywords",
-      "@method",
-      "@inherit",
-      "@inheritSection",
-      "@aliases",
-    )),
-
-    tag_name_with_block_parameter: _ => token(choice(
-      "@description",
-      "@examples",
-      "@returns",
-      "@return",
-      "@title",
-      "@details",
-      "@rawRd",
-      "@references",
-      "@seealso",
-      "@format",
-      "@examplesIf",
-      "@usage",
-      "@source",
-      "@evalRd",
-      "@eval",
-    )),
-
-    tag_name: $ => /@[a-zA-Z_]+/,
-
-    identifier: $ => /[a-zA-Z_$][a-zA-Z_$0-9]*/,
-
-    expression: $ => $.identifier,
-
-    comment: $ => token(choice(
-      "#'",
-      "//'"
-    )),
+    // description: $ => repeat1($._text),
+    //
+    // tag: $ => choice(
+    //   // tags with single parameter and optional block parameter
+    //   seq(
+    //     alias($.tag_name_with_single_parameter, $.tag_name),
+    //     optional($.identifier),
+    //     optional($.description),
+    //   ),
+    //
+    //   // tags with multiple parameters
+    //   seq(
+    //     alias($.tag_name_with_multiple_parameters, $.tag_name),
+    //     optional(repeat1($.identifier)),
+    //   ),
+    //
+    //   // tags with block parameter
+    //   seq(
+    //     alias($.tag_name_with_block_parameter, $.tag_name),
+    //     optional($.description),
+    //   ),
+    //
+    //   // default behavior
+    //   seq(
+    //     $.tag_name,
+    //     optional($.description)
+    //   ),
+    // ),
+    //
+    // tag_name_with_single_parameter: _ => token(choice(
+    //   "@param",
+    //   "@slot",
+    //   "@field",
+    //   "@describeIn",
+    //   "@templateVar",
+    //   "@inheritDotParams",
+    //   "@concept",
+    //   "@family",
+    //   "@example",
+    //   "@inheritParams",
+    //   "@order",
+    //   "@rdname",
+    //   "@includeRmd",
+    //   "@template",
+    //   "@backref",
+    // )),
+    //
+    // tag_name_with_multiple_parameters: _ => token(choice(
+    //   "@keywords",
+    //   "@method",
+    //   "@inherit",
+    //   "@inheritSection",
+    //   "@aliases",
+    // )),
+    //
+    // tag_name_with_block_parameter: _ => token(choice(
+    //   "@description",
+    //   "@examples",
+    //   "@returns",
+    //   "@return",
+    //   "@title",
+    //   "@details",
+    //   "@rawRd",
+    //   "@references",
+    //   "@seealso",
+    //   "@format",
+    //   "@examplesIf",
+    //   "@usage",
+    //   "@source",
+    //   "@evalRd",
+    //   "@eval",
+    // )),
+    //
+    // tag_name: $ => /@[a-zA-Z_]+/,
+    //
+    // identifier: $ => /[a-zA-Z_$][a-zA-Z_$0-9]*/,
+    //
+    // expression: $ => $.identifier,
+    //
+    // comment: $ => token(choice(
+    //   "#'",
+    //   "//'"
+    // )),
 
     _text: _ => token(prec(-1, /[^\s\n]*/)),
   }
