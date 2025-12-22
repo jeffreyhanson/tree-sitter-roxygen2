@@ -17,6 +17,21 @@ export default grammar({
     $.comment,
   ],
 
+  externals: $ => [
+    $._external_open_parenthesis,
+    $._external_close_parenthesis,
+    $._external_open_brace,
+    $._external_close_brace,
+    $._external_open_bracket,
+    $._external_close_bracket,
+    $._external_open_bracket2,
+    $._external_close_bracket2,
+    // If a syntax error is encountered, the first thing to occur is that our external
+    // scanner is called with all symbols marked valid. We really don't want this, so
+    // we include a sentinel external to detect this and decline to handle.
+    $._error_sentinel
+  ],
+
   rules: {
 
     document: $ => seq(
