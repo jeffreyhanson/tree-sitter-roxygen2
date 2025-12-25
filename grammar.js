@@ -20,6 +20,24 @@ export default grammar({
 
     description: $ => repeat1($._text),
 
+    bracketed_text: $ => seq(
+      "[",
+      repeat($._text),
+      "]"
+    ),
+
+    parenthesized_text: $ => seq(
+      "(",
+      repeat($._text),
+      ")"
+    ),
+
+    braced_text: $ => seq(
+      "{",
+      repeat($._text),
+      "}"
+    ),
+
     tag: $ => choice(
       // tags with single parameter and optional block parameter
       seq(
@@ -103,5 +121,6 @@ export default grammar({
     )),
 
     _text: _ => token(prec(-1, /[^\s\n]*/)),
+
   }
 })
