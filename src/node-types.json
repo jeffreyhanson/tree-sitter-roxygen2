@@ -2,7 +2,17 @@
   {
     "type": "description",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "punctuation",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "program",
@@ -23,6 +33,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "punctuation",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "tag",
@@ -48,6 +63,22 @@
     }
   },
   {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
     "type": "comment",
     "named": true,
     "extra": true
@@ -59,5 +90,13 @@
   {
     "type": "tag_name",
     "named": true
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
   }
 ]

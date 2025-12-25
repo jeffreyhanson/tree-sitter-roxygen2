@@ -30,63 +30,41 @@
     "description": {
       "type": "REPEAT1",
       "content": {
-        "type": "SYMBOL",
-        "name": "_text"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "punctuation"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_text"
+          }
+        ]
       }
     },
-    "bracketed_text": {
-      "type": "SEQ",
+    "punctuation": {
+      "type": "CHOICE",
       "members": [
         {
           "type": "STRING",
           "value": "["
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_text"
-          }
-        },
-        {
           "type": "STRING",
           "value": "]"
-        }
-      ]
-    },
-    "parenthesized_text": {
-      "type": "SEQ",
-      "members": [
+        },
         {
           "type": "STRING",
           "value": "("
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_text"
-          }
-        },
-        {
           "type": "STRING",
           "value": ")"
-        }
-      ]
-    },
-    "braced_text": {
-      "type": "SEQ",
-      "members": [
+        },
         {
           "type": "STRING",
           "value": "{"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_text"
-          }
         },
         {
           "type": "STRING",
@@ -384,10 +362,6 @@
     "identifier": {
       "type": "PATTERN",
       "value": "[a-zA-Z_$][a-zA-Z_$0-9]*"
-    },
-    "expression": {
-      "type": "SYMBOL",
-      "name": "identifier"
     },
     "comment": {
       "type": "TOKEN",

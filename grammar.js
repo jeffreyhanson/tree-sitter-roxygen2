@@ -18,23 +18,17 @@ export default grammar({
       repeat($.tag),
     ),
 
-    description: $ => repeat1($._text),
+    description: $ => repeat1(choice(
+      $.punctuation,
+      $._text
+    )),
 
-    bracketed_text: $ => seq(
+    punctuation: $ => choice(
       "[",
-      repeat($._text),
-      "]"
-    ),
-
-    parenthesized_text: $ => seq(
+      "]",
       "(",
-      repeat($._text),
-      ")"
-    ),
-
-    braced_text: $ => seq(
+      ")",
       "{",
-      repeat($._text),
       "}"
     ),
 
@@ -112,8 +106,6 @@ export default grammar({
     tag_name: $ => /@[a-zA-Z_]+/,
 
     identifier: $ => /[a-zA-Z_$][a-zA-Z_$0-9]*/,
-
-    expression: $ => $.identifier,
 
     comment: $ => token(choice(
       "#'",
