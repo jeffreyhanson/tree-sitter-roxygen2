@@ -5,12 +5,10 @@ const PREC = {
   // text
   TEXT: { ASSOC: prec, RANK: -100},
   // symbols
-  BRACE: { ASSOC: prec, RANK: 1},
-  BRACKET: { ASSOC: prec, RANK: 2},
-  PARENTHESIS: { ASSOC: prec, RANK: 3},
-  PUNCTUATION: { ASSOC: prec, RANK: 4},
-  // LaTeX expressions
-  MACRO: { ASSOC: prec, RANK: 5},
+  BRACE: { ASSOC: prec, RANK: -4},
+  BRACKET: { ASSOC: prec, RANK: -3},
+  PARENTHESIS: { ASSOC: prec, RANK: -2},
+  PUNCTUATION: { ASSOC: prec, RANK: -1},
   // comments
   COMMENT: { ASSOC: prec, RANK: 100},
 }
@@ -166,14 +164,14 @@ export default grammar({
     ),
 
     // basic tokens
-    _text: $ => token(withPrec(PREC.TEXT, /[^\s\n]*/)),
+    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     number: $ => /\d+/,
     tag_name: $ => /@[a-zA-Z_]+/,
     parameter: $ => /[a-zA-Z_$][a-zA-Z_$0-9]+/,
     macro: $ => /\\[a-zA-Z_][a-zA-Z_$0-9]+/,
     comment: $ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 
-     // R code t okens
+     // R code tokens
     _inline_r_code: $ => token.immediate(/[^\`\n]+/),
     _link_r_code: $ => token.immediate(/[^\]\n]+/),
     _fenced_r_code: $ => token.immediate(/[^\`\n]+/),

@@ -70,7 +70,7 @@
     },
     "punctuation": {
       "type": "PREC",
-      "value": 4,
+      "value": -1,
       "content": {
         "type": "CHOICE",
         "members": [
@@ -685,7 +685,7 @@
         "value": -100,
         "content": {
           "type": "PATTERN",
-          "value": "[^\\s\\n]*"
+          "value": "[^\\[\\]\\{\\}\\(\\)\\s\\n\\r]*"
         }
       }
     },
@@ -757,7 +757,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 1,
+        "value": -4,
         "content": {
           "type": "STRING",
           "value": "{"
@@ -768,7 +768,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 1,
+        "value": -4,
         "content": {
           "type": "STRING",
           "value": "}"
@@ -779,7 +779,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": -3,
         "content": {
           "type": "STRING",
           "value": "["
@@ -790,7 +790,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 2,
+        "value": -3,
         "content": {
           "type": "STRING",
           "value": "]"
@@ -801,7 +801,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 3,
+        "value": -2,
         "content": {
           "type": "STRING",
           "value": "("
@@ -812,7 +812,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 3,
+        "value": -2,
         "content": {
           "type": "STRING",
           "value": ")"
