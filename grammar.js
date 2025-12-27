@@ -210,8 +210,8 @@ export default grammar({
      // code tokens
     _inline_code: $ => token.immediate(/[^\`\n\r]+/),
     _link_code: $ => token.immediate(/[^\]\`\n\r]+/),
-    _fenced_code: $ => token(withPrec(PREC.CODE, /[^\n\r]*/)),
-    _block_code: $ => token(withPrec(PREC.CODE, /[^\n\r]*/)),
+    _fenced_code: $ => token(withPrec(PREC.CODE, /.*/)),
+    _block_code: $ => token(withPrec(PREC.CODE, /.*/)),
 
     // bracket symbols
     _open_brace: _ => token(withPrec(PREC.BRACE, "{")),

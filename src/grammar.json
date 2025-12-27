@@ -858,7 +858,7 @@
         "value": -99,
         "content": {
           "type": "PATTERN",
-          "value": "[^\\n\\r]*"
+          "value": ".*"
         }
       }
     },
@@ -869,7 +869,7 @@
         "value": -99,
         "content": {
           "type": "PATTERN",
-          "value": "[^\\n\\r]*"
+          "value": ".*"
         }
       }
     },
