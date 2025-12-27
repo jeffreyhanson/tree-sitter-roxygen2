@@ -35,7 +35,7 @@ export default grammar({
       $._formatted_link_element,
       // $._external_link_element,
       $._braces_element,
-      $._parentheses_element,
+      // $._parentheses_element,
       $._inline_code_chunk,
       $._fenced_code_chunk,
       $.macro,
@@ -174,17 +174,17 @@ export default grammar({
     // ),
 
     // Parentheses
-    _parentheses_element: $ => prec.left(seq(
-      field("open", "("),
-      optional(alias($._inline_code, $.code)),
-      optional(field("close",  token.immediate(")"))),
-    )),
+    // _parentheses_element: $ => seq(
+    //   field("open", "("),
+    //   optional(repeat1(alias($._text_no_parentheses, $.markdown))),
+    //   optional(field("close",  token.immediate(")"))),
+    // ),
 
     // Braces
     _braces_element: $ => prec.left(seq(
       field("open", "{"),
-      optional(alias($._inline_code, $.code)),
-      optional(field("close",  token.immediate("}"))),
+      optional(repeat1($.markdown)),
+      optional(field("close", token.immediate("}"))),
     )),
 
     // R code chunks
@@ -205,7 +205,10 @@ export default grammar({
     ),
 
     // basic tokens
-    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
+    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]+/)),
+    _text_no_braces: $ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
+    _text_no_parentheses: $ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
+    _text_no_brackets: $ => token(withPrec(PREC.TEXT, /[^\{\}\(\)\s\n\r]*/)),
     comment: $ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 
     // identifier tokens
