@@ -65,6 +65,10 @@
           "named": true
         },
         {
+          "type": "description",
+          "named": true
+        },
+        {
           "type": "macro",
           "named": true
         },

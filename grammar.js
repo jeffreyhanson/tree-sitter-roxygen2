@@ -30,7 +30,7 @@ export default grammar({
       repeat($.tag),
     ),
 
-    description: $ => repeat1(choice(
+    description: $ => prec.left(repeat1(choice(
       $._link_element,
       $._formatted_link_element,
       // $._external_link_element,
@@ -40,7 +40,7 @@ export default grammar({
       $._fenced_code_chunk,
       $.macro,
       $.markdown,
-    )),
+    ))),
 
     markdown: $=> choice(
       $._text,
@@ -183,7 +183,7 @@ export default grammar({
     // Braces
     _braces_element: $ => prec.left(seq(
       field("open", "{"),
-      optional(repeat1($.markdown)),
+      optional(repeat1($.description)),
       optional(field("close", token.immediate("}"))),
     )),
 
