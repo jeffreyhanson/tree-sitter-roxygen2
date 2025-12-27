@@ -31,8 +31,8 @@ export default grammar({
     ),
 
     description: $ => repeat1(choice(
-      // $._link_element,
-      // $._formatted_link_element,
+      $._link_element,
+      $._formatted_link_element,
       // $._external_link_element,
       $._inline_code_chunk,
       $._fenced_code_chunk,
