@@ -4,13 +4,28 @@
 const PREC = {
   // text
   TEXT: { ASSOC: prec, RANK: -100},
+  CODE: { ASSOC: prec, RANK: -1},
   // symbols
-  BRACE: { ASSOC: prec, RANK: -4},
-  BRACKET: { ASSOC: prec, RANK: -3},
-  PARENTHESIS: { ASSOC: prec, RANK: -2},
-  PUNCTUATION: { ASSOC: prec, RANK: -1},
+  BACK_TICK: { ASSOC: prec, RANK: 0},
+  BRACE: { ASSOC: prec, RANK: 0},
+  BRACKET: { ASSOC: prec, RANK: 0},
+  PARENTHESIS: { ASSOC: prec, RANK: 0},
+  // code chunk elements
+  CODE_CHUNK_ELEMENT: { ASSOC: prec, RANK: 10},
+  // description elements
+  MARKDOWN: { ASSOC: prec, RANK: 100},
+  PUNCTUATION: { ASSOC: prec, RANK: 110},
+  CODE_CHUNK: { ASSOC: prec, RANK: 120},
+  MACRO: { ASSOC: prec, RANK: 130},
+  LINK: { ASSOC: prec, RANK: 140},
+  // tag elements
+  DESCRIPTION: { ASSOC: prec, RANK: 210},
+  PARAMETER: { ASSOC: prec, RANK: 220},
+  TAG_NAME: { ASSOC: prec, RANK: 230},
+  // tags
+  TAG: { ASSOC: prec, RANK: 300},
   // comments
-  COMMENT: { ASSOC: prec, RANK: 1},
+  COMMENT: { ASSOC: prec, RANK: 400},
 }
 
 export default grammar({
@@ -30,20 +45,28 @@ export default grammar({
       repeat($.tag),
     ),
 
-    description: $ => repeat1(choice(
+    description: $ => withPrec(PREC.DESCRIPTION, repeat1(choice(
+      $.link,
+      $.code_chunk,
+      $.macro,
+      $.markdown,
+    ))),
+
+    markdown: $ => withPrec(PREC.MARKDOWN, choice(
+      $._text,
+      $.punctuation,
+    )),
+
+    link: $ => withPrec(PREC.LINK, choice(
       $._link_element,
       $._formatted_link_element,
       // $._external_link_element,
-      $._inline_code_chunk,
-      $._fenced_code_chunk,
-      $.macro,
-      $.markdown,
     )),
 
-    markdown: $=> choice(
-      $._text,
-      $.punctuation,
-    ),
+    code_chunk: $ => withPrec(PREC.CODE_CHUNK, choice(
+      $._inline_code_chunk,
+      $._fenced_code_chunk,
+    )),
 
     punctuation: $ => withPrec(PREC.PUNCTUATION, choice(
       $._open_brace,
@@ -52,17 +75,18 @@ export default grammar({
       $._close_bracket,
       $._open_parenthesis,
       $._close_parenthesis,
+      $._back_tick,
     )),
 
     // roxygen2 tags
-    tag: $ => choice(
+    tag: $ => withPrec(PREC.TAG, choice(
       $._generic_tag_with_single_parameter,
       $._generic_tag_with_multiple_parameters,
       $._generic_tag_with_no_parameters,
       $._section_tag,
       $._examples_tag,
       $._default_tag,
-    ),
+    )),
 
     _generic_tag_with_single_parameter: $ => seq(
       alias($._tag_name_with_single_parameter, $.tag_name),
@@ -136,7 +160,7 @@ export default grammar({
 
     _examples_tag: $ => seq(
       alias($._examples_tag_name, $.tag_name),
-      optional($._block_code_chunk),
+      optional($._example_code_chunk),
     ),
 
     _examples_tag_name: _ => token(choice(
@@ -172,42 +196,45 @@ export default grammar({
     // ),
 
     // R code chunks
-    _inline_code_chunk: $ => seq(
+    _inline_code_chunk: $ => withPrec(PREC.CODE_CHUNK_ELEMENT, seq(
       field("open", "`"),
       optional(alias($._inline_code, $.code)),
       optional(field("close", token.immediate("`"))),
-    ),
+    )),
 
-    _fenced_code_chunk: $ => seq(
+    _fenced_code_chunk: $ => withPrec(PREC.CODE_CHUNK_ELEMENT, seq(
       field("open", "```"),
-      optional(repeat1(alias($._block_code, $.code))),
-      optional(field("close", token.immediate("```"))),
-    ),
+      optional(repeat1(alias($._fenced_code, $.code))),
+      field("close", "```"),
+    )),
 
-    _block_code_chunk: $ => repeat1(
-      choice(
-        seq($.macro, $.punctuation),
-        alias($._block_code, $.code),
-        $.punctuation
-      )
+    _example_code_chunk: $ => withPrec(PREC.CODE_CHUNK_ELEMENT, repeat1(
+      $._example_code
+    )),
+
+    _example_code: $ => choice(
+      seq($.macro, alias($._open_brace, $.punctuation)),
+      alias($._block_code, $.code),
+      alias($._close_brace, $.punctuation),
     ),
 
     // basic tokens
-    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
-    _text_no_braces: $ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
-    _text_no_parentheses: $ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
-    _text_no_brackets: $ => token(withPrec(PREC.TEXT, /[^\{\}\(\)\s\n\r]*/)),
-    comment: $ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
+    _text: _ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
+    _text_no_braces: _ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
+    _text_no_parentheses: _ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
+    _text_no_brackets: _ => token(withPrec(PREC.TEXT, /[^\{\}\(\)\s\n\r]*/)),
+    comment: _ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 
     // identifier tokens
-    tag_name: $ => /@[a-zA-Z_]+/,
-    parameter: $ => /[a-zA-Z\.\$\_0-9]+/,
-    macro: $ => /\\[a-zA-Z]+/,
+    tag_name: _ => withPrec(PREC.TAG_NAME, /@[a-zA-Z_]+/),
+    parameter: _ => token(withPrec(PREC.PARAMETER, /[a-zA-Z\.\$\_0-9]+/)),
+    macro: _ => token(withPrec(PREC.MACRO, /\\[a-zA-Z]+/)),
 
      // code tokens
-    _inline_code: $ => token.immediate(/[^\`\n\r]+/),
-    _link_code: $ => token.immediate(/[^\]\`\n\r]+/),
-    _block_code: $ => token(withPrec(PREC.TEXT, /[^\n\r]*/)),
+    _inline_code: _ => token.immediate(/[^\`\n\r]+/),
+    _link_code: _ => token.immediate(/[^\]\`\n\r]+/),
+    _fenced_code: _ => token(/[^\n\r]+/),
+    _block_code: _ => token(withPrec(PREC.CODE, /[^\n\r]+/)),
 
     // bracket symbols
     _open_brace: _ => token(withPrec(PREC.BRACE, "{")),
@@ -216,6 +243,7 @@ export default grammar({
     _close_bracket: _ => token(withPrec(PREC.BRACKET, "]")),
     _open_parenthesis: _ => token(withPrec(PREC.PARENTHESIS, "(")),
     _close_parenthesis: _ => token(withPrec(PREC.PARENTHESIS, ")")),
+    _back_tick: _ => token(withPrec(PREC.BACK_TICK, "`")),
 
   }
 })

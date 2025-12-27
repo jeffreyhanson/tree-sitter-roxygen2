@@ -1,81 +1,10 @@
 [
   {
-    "type": "code_chunk",
-    "named": true,
-    "fields": {
-      "close": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "`",
-            "named": false
-          },
-          {
-            "type": "```",
-            "named": false
-          }
-        ]
-      },
-      "open": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "`",
-            "named": false
-          },
-          {
-            "type": "```",
-            "named": false
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "code",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "description",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "code_chunk",
-          "named": true
-        },
-        {
-          "type": "link",
-          "named": true
-        },
-        {
-          "type": "macro",
-          "named": true
-        },
-        {
-          "type": "markdown",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "link",
-    "named": true,
     "fields": {
       "close": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -83,14 +12,22 @@
             "named": false
           },
           {
+            "type": "`",
+            "named": false
+          },
+          {
             "type": "`]",
+            "named": false
+          },
+          {
+            "type": "```",
             "named": false
           }
         ]
       },
       "open": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
           {
             "type": "[",
@@ -99,16 +36,32 @@
           {
             "type": "[`",
             "named": false
+          },
+          {
+            "type": "`",
+            "named": false
+          },
+          {
+            "type": "```",
+            "named": false
           }
         ]
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "code",
+          "named": true
+        },
+        {
+          "type": "macro",
+          "named": true
+        },
+        {
+          "type": "markdown",
           "named": true
         }
       ]
