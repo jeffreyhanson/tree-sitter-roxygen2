@@ -672,8 +672,16 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_block_code_chunk"
+              "type": "REPEAT1",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_block_code"
+                },
+                "named": true,
+                "value": "code"
+              }
             },
             {
               "type": "BLANK"
@@ -704,13 +712,31 @@
     "_block_code_chunk": {
       "type": "REPEAT1",
       "content": {
-        "type": "ALIAS",
-        "content": {
-          "type": "SYMBOL",
-          "name": "_block_code"
-        },
-        "named": true,
-        "value": "code"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "macro"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "punctuation"
+              }
+            ]
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_block_code"
+            },
+            "named": true,
+            "value": "code"
+          }
+        ]
       }
     },
     "_text": {

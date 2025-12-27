@@ -180,12 +180,15 @@ export default grammar({
 
     _fenced_code_chunk: $ => seq(
       field("open", "```"),
-      optional($._block_code_chunk),
+      optional(repeat1(alias($._block_code, $.code))),
       optional(field("close", token.immediate("```"))),
     ),
 
     _block_code_chunk: $ => repeat1(
-      alias($._block_code, $.code),
+      choice(
+        seq($.macro, $.punctuation),
+        alias($._block_code, $.code),
+      )
     ),
 
     // basic tokens

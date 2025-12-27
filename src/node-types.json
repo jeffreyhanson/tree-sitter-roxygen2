@@ -124,7 +124,15 @@
           "named": true
         },
         {
+          "type": "macro",
+          "named": true
+        },
+        {
           "type": "parameter",
+          "named": true
+        },
+        {
+          "type": "punctuation",
           "named": true
         },
         {
