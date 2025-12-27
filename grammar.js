@@ -87,8 +87,8 @@ export default grammar({
     )),
 
     _generic_tag_with_multiple_parameters: $ => seq(
-      alias($._tag_name_with_multiple_parameters, $.tag_name),
-      repeat($.parameter),
+      alias($._tag_name_with_multiple_parameters, $.ggg_tag_name),
+      optional(repeat1($.parameter)),
     ),
 
     _tag_name_with_multiple_parameters: _ => token(choice(
@@ -169,10 +169,12 @@ export default grammar({
 
     // basic tokens
     _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
-    tag_name: $ => /@[a-zA-Z_]+/,
-    parameter: $ => /[a-zA-Z_]+/,
-    macro: $ => /\\[a-zA-Z_][a-zA-Z_$0-9]+/,
     comment: $ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
+
+    // identifier tokens
+    tag_name: $ => /@[a-zA-Z_]+/,
+    parameter: $ => /([a-zA-Z]|[a-zA-Z][a-zA-Z_$0-9])+/,
+    macro: $ => /\\[a-zA-Z]+/,
 
      // code tokens
     _inline_code: $ => token.immediate(/[^\`\n\r]+/),

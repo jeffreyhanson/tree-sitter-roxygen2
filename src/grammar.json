@@ -246,14 +246,22 @@
             "name": "_tag_name_with_multiple_parameters"
           },
           "named": true,
-          "value": "tag_name"
+          "value": "ggg_tag_name"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "parameter"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "parameter"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -651,18 +659,6 @@
         }
       }
     },
-    "tag_name": {
-      "type": "PATTERN",
-      "value": "@[a-zA-Z_]+"
-    },
-    "parameter": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z_]+"
-    },
-    "macro": {
-      "type": "PATTERN",
-      "value": "\\\\[a-zA-Z_][a-zA-Z_$0-9]+"
-    },
     "comment": {
       "type": "TOKEN",
       "content": {
@@ -682,6 +678,18 @@
           ]
         }
       }
+    },
+    "tag_name": {
+      "type": "PATTERN",
+      "value": "@[a-zA-Z_]+"
+    },
+    "parameter": {
+      "type": "PATTERN",
+      "value": "([a-zA-Z]|[a-zA-Z][a-zA-Z_$0-9])+"
+    },
+    "macro": {
+      "type": "PATTERN",
+      "value": "\\\\[a-zA-Z]+"
     },
     "_inline_code": {
       "type": "IMMEDIATE_TOKEN",

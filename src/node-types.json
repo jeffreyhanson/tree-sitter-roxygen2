@@ -116,6 +116,10 @@
           "named": true
         },
         {
+          "type": "ggg_tag_name",
+          "named": true
+        },
+        {
           "type": "parameter",
           "named": true
         },
@@ -171,6 +175,10 @@
     "type": "comment",
     "named": true,
     "extra": true
+  },
+  {
+    "type": "ggg_tag_name",
+    "named": true
   },
   {
     "type": "macro",
