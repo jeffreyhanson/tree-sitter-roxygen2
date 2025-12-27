@@ -5,6 +5,7 @@ const PREC = {
   // text
   TEXT: { ASSOC: prec, RANK: -100},
   // symbols
+  BACK_TICK: { ASSOC: prec, RANK: -5},
   BRACE: { ASSOC: prec, RANK: -4},
   BRACKET: { ASSOC: prec, RANK: -3},
   PARENTHESIS: { ASSOC: prec, RANK: -2},
@@ -52,6 +53,7 @@ export default grammar({
       $._close_bracket,
       $._open_parenthesis,
       $._close_parenthesis,
+      $._back_tick,
     )),
 
     // roxygen2 tags
@@ -136,7 +138,7 @@ export default grammar({
 
     _examples_tag: $ => seq(
       alias($._examples_tag_name, $.tag_name),
-      optional($._block_code_chunk),
+      optional($._example_code_chunk),
     ),
 
     _examples_tag_name: _ => token(choice(
@@ -184,15 +186,16 @@ export default grammar({
       optional(field("close", token.immediate("```"))),
     ),
 
-    _block_code_chunk: $ => repeat1(
-      choice(
-        seq($.macro, $.punctuation),
-        alias($._block_code, $.code),
-      )
+    _example_code_chunk: $ => repeat1($._example_code),
+
+    _example_code: $ => choice(
+      seq($.macro, $.punctuation),
+      alias($._block_code, $.code),
+      $.punctuation,
     ),
 
     // basic tokens
-    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]+/)),
+    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     _text_no_braces: $ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
     _text_no_parentheses: $ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
     _text_no_brackets: $ => token(withPrec(PREC.TEXT, /[^\{\}\(\)\s\n\r]*/)),
@@ -215,6 +218,7 @@ export default grammar({
     _close_bracket: _ => token(withPrec(PREC.BRACKET, "]")),
     _open_parenthesis: _ => token(withPrec(PREC.PARENTHESIS, "(")),
     _close_parenthesis: _ => token(withPrec(PREC.PARENTHESIS, ")")),
+    _back_tick: _ => token(withPrec(PREC.BACK_TICK, "`")),
 
   }
 })

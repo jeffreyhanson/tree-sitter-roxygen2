@@ -101,6 +101,10 @@
           {
             "type": "SYMBOL",
             "name": "_close_parenthesis"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_back_tick"
           }
         ]
       }
@@ -464,7 +468,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_block_code_chunk"
+              "name": "_example_code_chunk"
             },
             {
               "type": "BLANK"
@@ -709,35 +713,43 @@
         }
       ]
     },
-    "_block_code_chunk": {
+    "_example_code_chunk": {
       "type": "REPEAT1",
       "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "macro"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "punctuation"
-              }
-            ]
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_block_code"
-            },
-            "named": true,
-            "value": "code"
-          }
-        ]
+        "type": "SYMBOL",
+        "name": "_example_code"
       }
+    },
+    "_example_code": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "macro"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "punctuation"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_block_code"
+          },
+          "named": true,
+          "value": "code"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "punctuation"
+        }
+      ]
     },
     "_text": {
       "type": "TOKEN",
@@ -746,7 +758,7 @@
         "value": -100,
         "content": {
           "type": "PATTERN",
-          "value": "[^\\[\\]\\{\\}\\(\\)\\s\\n\\r]+"
+          "value": "[^\\[\\]\\{\\}\\(\\)\\s\\n\\r]*"
         }
       }
     },
@@ -903,6 +915,17 @@
         "content": {
           "type": "STRING",
           "value": ")"
+        }
+      }
+    },
+    "_back_tick": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -5,
+        "content": {
+          "type": "STRING",
+          "value": "`"
         }
       }
     }
