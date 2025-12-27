@@ -440,7 +440,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_example_code_chunk"
+              "name": "_block_code_chunk"
             },
             {
               "type": "BLANK"
@@ -596,25 +596,16 @@
           }
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "comment"
-              },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_fenced_code"
-                },
-                "named": true,
-                "value": "code"
-              }
-            ]
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_block_code_chunk"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",
@@ -637,13 +628,13 @@
         }
       ]
     },
-    "_example_code_chunk": {
+    "_block_code_chunk": {
       "type": "REPEAT1",
       "content": {
         "type": "ALIAS",
         "content": {
           "type": "SYMBOL",
-          "name": "_example_code"
+          "name": "_block_code"
         },
         "named": true,
         "value": "code"
@@ -706,14 +697,7 @@
         "value": "[^\\]\\n]+"
       }
     },
-    "_fenced_code": {
-      "type": "IMMEDIATE_TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[^\\`\\n]+"
-      }
-    },
-    "_example_code": {
+    "_block_code": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",

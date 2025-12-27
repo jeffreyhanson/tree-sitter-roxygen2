@@ -131,7 +131,7 @@ export default grammar({
 
     _examples_tag: $ => seq(
       alias($._examples_tag_name, $.tag_name),
-      optional($._example_code_chunk),
+      optional($._block_code_chunk),
     ),
 
     _examples_tag_name: _ => token(choice(
@@ -159,12 +159,12 @@ export default grammar({
 
     _fenced_code_chunk: $ => seq(
       field("open", "```"),
-      repeat(choice($.comment, alias($._fenced_code, $.code))),
+      optional($._block_code_chunk),
       optional(field("close", token.immediate("```"))),
     ),
 
-    _example_code_chunk: $ => repeat1(
-      alias($._example_code, $.code),
+    _block_code_chunk: $ => repeat1(
+      alias($._block_code, $.code),
     ),
 
     // basic tokens
@@ -177,8 +177,7 @@ export default grammar({
      // code tokens
     _inline_code: $ => token.immediate(/[^\`\n]+/),
     _link_code: $ => token.immediate(/[^\]\n]+/),
-    _fenced_code: $ => token.immediate(/[^\`\n]+/),
-    _example_code: $ => token(withPrec(PREC.TEXT, /[^\n\r]*/)),
+    _block_code: $ => token(withPrec(PREC.TEXT, /[^\n\r]*/)),
 
     // bracket symbols
     _open_brace: _ => token(withPrec(PREC.BRACE, "{")),

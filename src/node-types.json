@@ -1,10 +1,5 @@
 [
   {
-    "type": "code",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "description",
     "named": true,
     "fields": {
@@ -51,10 +46,6 @@
       "types": [
         {
           "type": "code",
-          "named": true
-        },
-        {
-          "type": "comment",
           "named": true
         },
         {
@@ -171,6 +162,10 @@
   {
     "type": "```",
     "named": false
+  },
+  {
+    "type": "code",
+    "named": true
   },
   {
     "type": "comment",
