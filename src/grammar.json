@@ -38,6 +38,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "_formatted_link_code_chunk"
+          },
+          {
+            "type": "SYMBOL",
             "name": "_inline_code_chunk"
           },
           {
@@ -246,7 +250,7 @@
             "name": "_tag_name_with_multiple_parameters"
           },
           "named": true,
-          "value": "ggg_tag_name"
+          "value": "tag_name"
         },
         {
           "type": "CHOICE",
@@ -375,6 +379,14 @@
           {
             "type": "STRING",
             "value": "@eval"
+          },
+          {
+            "type": "STRING",
+            "value": "@md"
+          },
+          {
+            "type": "STRING",
+            "value": "@noMd"
           }
         ]
       }
@@ -533,6 +545,55 @@
                 "content": {
                   "type": "STRING",
                   "value": "]"
+                }
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "_formatted_link_code_chunk": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "open",
+          "content": {
+            "type": "STRING",
+            "value": "[`"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_link_code"
+              },
+              "named": true,
+              "value": "code"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "close",
+              "content": {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "`]"
                 }
               }
             },
@@ -702,7 +763,7 @@
       "type": "IMMEDIATE_TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[^\\]\\n\\r]+"
+        "value": "[^\\]\\`\\n\\r]+"
       }
     },
     "_block_code": {

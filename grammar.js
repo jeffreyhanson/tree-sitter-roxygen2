@@ -32,6 +32,7 @@ export default grammar({
 
     description: $ => repeat1(choice(
       $._link_code_chunk,
+      $._formatted_link_code_chunk,
       $._inline_code_chunk,
       $._fenced_code_chunk,
       $.macro,
@@ -87,7 +88,7 @@ export default grammar({
     )),
 
     _generic_tag_with_multiple_parameters: $ => seq(
-      alias($._tag_name_with_multiple_parameters, $.ggg_tag_name),
+      alias($._tag_name_with_multiple_parameters, $.tag_name),
       optional(repeat1($.parameter)),
     ),
 
@@ -153,6 +154,12 @@ export default grammar({
       optional(field("close", token.immediate("]"))),
     ),
 
+    _formatted_link_code_chunk: $ => seq(
+      field("open", "[`"),
+      optional(alias($._link_code, $.code)),
+      optional(field("close", token.immediate("`]"))),
+    ),
+
     _inline_code_chunk: $ => seq(
       field("open", "`"),
       optional(alias($._inline_code, $.code)),
@@ -180,7 +187,7 @@ export default grammar({
 
      // code tokens
     _inline_code: $ => token.immediate(/[^\`\n\r]+/),
-    _link_code: $ => token.immediate(/[^\]\n\r]+/),
+    _link_code: $ => token.immediate(/[^\]\`\n\r]+/),
     _block_code: $ => token(withPrec(PREC.TEXT, /[^\n\r]*/)),
 
     // bracket symbols

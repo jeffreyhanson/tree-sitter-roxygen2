@@ -16,6 +16,10 @@
             "named": false
           },
           {
+            "type": "`]",
+            "named": false
+          },
+          {
             "type": "```",
             "named": false
           }
@@ -27,6 +31,10 @@
         "types": [
           {
             "type": "[",
+            "named": false
+          },
+          {
+            "type": "[`",
             "named": false
           },
           {
@@ -116,10 +124,6 @@
           "named": true
         },
         {
-          "type": "ggg_tag_name",
-          "named": true
-        },
-        {
           "type": "parameter",
           "named": true
         },
@@ -156,11 +160,19 @@
     "named": false
   },
   {
+    "type": "[`",
+    "named": false
+  },
+  {
     "type": "]",
     "named": false
   },
   {
     "type": "`",
+    "named": false
+  },
+  {
+    "type": "`]",
     "named": false
   },
   {
@@ -175,10 +187,6 @@
     "type": "comment",
     "named": true,
     "extra": true
-  },
-  {
-    "type": "ggg_tag_name",
-    "named": true
   },
   {
     "type": "macro",
