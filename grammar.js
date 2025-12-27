@@ -191,7 +191,8 @@ export default grammar({
 
     _example_code: $ => choice(
       seq($.macro, alias($._open_brace, $.punctuation)),
-      alias($._block_code, $.code),
+      alias($._inline_code, $.code),
+      // alias($._block_code, $.code),
       alias($._close_brace, $.punctuation),
     ),
 

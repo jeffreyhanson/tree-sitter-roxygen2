@@ -745,7 +745,7 @@
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_block_code"
+            "name": "_inline_code"
           },
           "named": true,
           "value": "code"
