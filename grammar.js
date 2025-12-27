@@ -31,8 +31,11 @@ export default grammar({
     ),
 
     description: $ => repeat1(choice(
-      $._link_code_chunk,
-      $._formatted_link_code_chunk,
+      $._link_element,
+      $._formatted_link_element,
+      // $._external_link_element,
+      $._braces_element,
+      // $._parentheses_element,
       $._inline_code_chunk,
       $._fenced_code_chunk,
       $.macro,
@@ -148,19 +151,43 @@ export default grammar({
       optional($.description)
     ),
 
-    // R code chunks
-    _link_code_chunk: $ => seq(
+    // Brackets
+    _link_element: $ => seq(
       field("open", "["),
       optional(alias($._link_code, $.code)),
       optional(field("close", token.immediate("]"))),
     ),
 
-    _formatted_link_code_chunk: $ => seq(
+    _formatted_link_element: $ => seq(
       field("open", "[`"),
       optional(alias($._link_code, $.code)),
       optional(field("close", token.immediate("`]"))),
     ),
 
+    // _external_link_element: $ => seq(
+    //   field("open", "["),
+    //   alias($._text, $.markdown),
+    //   field("close", token.immediate("]")),
+    //   field("open", "("),
+    //   optional(alias($._text, $.url)),
+    //   optional(field("close", token.immediate(")"))),
+    // ),
+
+    // Parentheses
+    // _parentheses_element: $ => seq(
+    //   field("open", "("),
+    //   optional($.markdown),
+    //   optional(field("close", token.immediate(")"))),
+    // ),
+
+    // Braces
+    _braces_element: $ => prec.left(seq(
+      field("open", "{"),
+      optional($.markdown),
+      optional(field("close", token.immediate("}"))),
+    )),
+
+    // R code chunks
     _inline_code_chunk: $ => seq(
       field("open", "`"),
       optional(alias($._inline_code, $.code)),
