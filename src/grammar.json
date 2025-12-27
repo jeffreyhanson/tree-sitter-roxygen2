@@ -685,7 +685,7 @@
     },
     "parameter": {
       "type": "PATTERN",
-      "value": "([a-zA-Z]|[a-zA-Z][a-zA-Z_$0-9])+"
+      "value": "[a-zA-Z\\.\\$\\_0-9]+"
     },
     "macro": {
       "type": "PATTERN",

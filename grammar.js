@@ -118,6 +118,8 @@ export default grammar({
       "@source",
       "@evalRd",
       "@eval",
+      "@md",
+      "@noMd",
     )),
 
     _section_tag: $ => seq(
@@ -173,7 +175,7 @@ export default grammar({
 
     // identifier tokens
     tag_name: $ => /@[a-zA-Z_]+/,
-    parameter: $ => /([a-zA-Z]|[a-zA-Z][a-zA-Z_$0-9])+/,
+    parameter: $ => /[a-zA-Z\.\$\_0-9]+/,
     macro: $ => /\\[a-zA-Z]+/,
 
      // code tokens
