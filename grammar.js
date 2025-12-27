@@ -30,17 +30,15 @@ export default grammar({
       repeat($.tag),
     ),
 
-    description: $ => prec.left(repeat1(choice(
-      $._link_element,
-      $._formatted_link_element,
+    description: $ => repeat1(choice(
+      // $._link_element,
+      // $._formatted_link_element,
       // $._external_link_element,
-      $._braces_element,
-      // $._parentheses_element,
       $._inline_code_chunk,
       $._fenced_code_chunk,
       $.macro,
       $.markdown,
-    ))),
+    )),
 
     markdown: $=> choice(
       $._text,
@@ -172,20 +170,6 @@ export default grammar({
     //   optional(alias($._text, $.url)),
     //   optional(field("close", token.immediate(")"))),
     // ),
-
-    // Parentheses
-    // _parentheses_element: $ => seq(
-    //   field("open", "("),
-    //   optional(repeat1(alias($._text_no_parentheses, $.markdown))),
-    //   optional(field("close",  token.immediate(")"))),
-    // ),
-
-    // Braces
-    _braces_element: $ => prec.left(seq(
-      field("open", "{"),
-      optional(repeat1($.description)),
-      optional(field("close", token.immediate("}"))),
-    )),
 
     // R code chunks
     _inline_code_chunk: $ => seq(
