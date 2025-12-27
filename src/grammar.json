@@ -293,6 +293,10 @@
           {
             "type": "STRING",
             "value": "@aliases"
+          },
+          {
+            "type": "STRING",
+            "value": "@include"
           }
         ]
       }

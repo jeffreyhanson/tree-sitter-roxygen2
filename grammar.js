@@ -98,6 +98,7 @@ export default grammar({
       "@inherit",
       "@inheritSection",
       "@aliases",
+      "@include",
     )),
 
     _generic_tag_with_no_parameters: $ => seq(
