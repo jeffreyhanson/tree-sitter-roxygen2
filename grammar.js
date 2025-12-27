@@ -35,7 +35,7 @@ export default grammar({
       $._formatted_link_element,
       // $._external_link_element,
       $._braces_element,
-      // $._parentheses_element,
+      $._parentheses_element,
       $._inline_code_chunk,
       $._fenced_code_chunk,
       $.macro,
@@ -174,11 +174,11 @@ export default grammar({
     // ),
 
     // Parentheses
-    // _parentheses_element: $ => seq(
-    //   field("open", "("),
-    //   optional($.markdown),
-    //   optional(field("close", token.immediate(")"))),
-    // ),
+    _parentheses_element: $ => prec.left(seq(
+      field("open", "("),
+      optional($.markdown),
+      optional(field("close", ")")),
+    )),
 
     // Braces
     _braces_element: $ => prec.left(seq(

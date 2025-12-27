@@ -8,6 +8,10 @@
         "required": false,
         "types": [
           {
+            "type": ")",
+            "named": false
+          },
+          {
             "type": "]",
             "named": false
           },
@@ -33,6 +37,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "(",
+            "named": false
+          },
           {
             "type": "[",
             "named": false
