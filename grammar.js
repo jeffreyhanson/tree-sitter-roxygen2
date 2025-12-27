@@ -170,13 +170,13 @@ export default grammar({
     // basic tokens
     _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     tag_name: $ => /@[a-zA-Z_]+/,
-    parameter: $ => /[a-zA-Z_$][a-zA-Z_$0-9]+/,
+    parameter: $ => /[a-zA-Z_]+/,
     macro: $ => /\\[a-zA-Z_][a-zA-Z_$0-9]+/,
     comment: $ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 
      // code tokens
-    _inline_code: $ => token.immediate(/[^\`\n]+/),
-    _link_code: $ => token.immediate(/[^\]\n]+/),
+    _inline_code: $ => token.immediate(/[^\`\n\r]+/),
+    _link_code: $ => token.immediate(/[^\]\n\r]+/),
     _block_code: $ => token(withPrec(PREC.TEXT, /[^\n\r]*/)),
 
     // bracket symbols

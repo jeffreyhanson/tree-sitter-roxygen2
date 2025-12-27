@@ -657,7 +657,7 @@
     },
     "parameter": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_$][a-zA-Z_$0-9]+"
+      "value": "[a-zA-Z_]+"
     },
     "macro": {
       "type": "PATTERN",
@@ -687,14 +687,14 @@
       "type": "IMMEDIATE_TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[^\\`\\n]+"
+        "value": "[^\\`\\n\\r]+"
       }
     },
     "_link_code": {
       "type": "IMMEDIATE_TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[^\\]\\n]+"
+        "value": "[^\\]\\n\\r]+"
       }
     },
     "_block_code": {
