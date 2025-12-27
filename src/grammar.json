@@ -681,7 +681,7 @@
                 "type": "ALIAS",
                 "content": {
                   "type": "SYMBOL",
-                  "name": "_block_code"
+                  "name": "_fenced_code"
                 },
                 "named": true,
                 "value": "code"
@@ -731,8 +731,13 @@
               "name": "macro"
             },
             {
-              "type": "SYMBOL",
-              "name": "punctuation"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_open_brace"
+              },
+              "named": true,
+              "value": "punctuation"
             }
           ]
         },
@@ -746,8 +751,13 @@
           "value": "code"
         },
         {
-          "type": "SYMBOL",
-          "name": "punctuation"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_close_brace"
+          },
+          "named": true,
+          "value": "punctuation"
         }
       ]
     },
@@ -841,11 +851,22 @@
         "value": "[^\\]\\`\\n\\r]+"
       }
     },
+    "_fenced_code": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -99,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^\\n\\r]*"
+        }
+      }
+    },
     "_block_code": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": -100,
+        "value": -99,
         "content": {
           "type": "PATTERN",
           "value": "[^\\n\\r]*"

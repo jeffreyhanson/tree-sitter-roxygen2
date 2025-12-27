@@ -4,6 +4,7 @@
 const PREC = {
   // text
   TEXT: { ASSOC: prec, RANK: -100},
+  CODE: { ASSOC: prec, RANK: -99},
   // symbols
   BACK_TICK: { ASSOC: prec, RANK: -5},
   BRACE: { ASSOC: prec, RANK: -4},
@@ -182,16 +183,16 @@ export default grammar({
 
     _fenced_code_chunk: $ => seq(
       field("open", "```"),
-      optional(repeat1(alias($._block_code, $.code))),
+      optional(repeat1(alias($._fenced_code, $.code))),
       optional(field("close", token.immediate("```"))),
     ),
 
     _example_code_chunk: $ => repeat1($._example_code),
 
     _example_code: $ => choice(
-      seq($.macro, $.punctuation),
+      seq($.macro, alias($._open_brace, $.punctuation)),
       alias($._block_code, $.code),
-      $.punctuation,
+      alias($._close_brace, $.punctuation),
     ),
 
     // basic tokens
@@ -209,7 +210,8 @@ export default grammar({
      // code tokens
     _inline_code: $ => token.immediate(/[^\`\n\r]+/),
     _link_code: $ => token.immediate(/[^\]\`\n\r]+/),
-    _block_code: $ => token(withPrec(PREC.TEXT, /[^\n\r]*/)),
+    _fenced_code: $ => token(withPrec(PREC.CODE, /[^\n\r]*/)),
+    _block_code: $ => token(withPrec(PREC.CODE, /[^\n\r]*/)),
 
     // bracket symbols
     _open_brace: _ => token(withPrec(PREC.BRACE, "{")),
