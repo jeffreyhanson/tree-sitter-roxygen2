@@ -634,8 +634,13 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "markdown"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_inline_code"
+                },
+                "named": true,
+                "value": "code"
               },
               {
                 "type": "BLANK"
@@ -682,8 +687,13 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "markdown"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_inline_code"
+                },
+                "named": true,
+                "value": "code"
               },
               {
                 "type": "BLANK"

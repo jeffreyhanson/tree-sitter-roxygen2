@@ -176,14 +176,14 @@ export default grammar({
     // Parentheses
     _parentheses_element: $ => prec.left(seq(
       field("open", "("),
-      optional($.markdown),
+      optional(alias($._inline_code, $.code)),
       optional(field("close",  token.immediate(")"))),
     )),
 
     // Braces
     _braces_element: $ => prec.left(seq(
       field("open", "{"),
-      optional($.markdown),
+      optional(alias($._inline_code, $.code)),
       optional(field("close",  token.immediate("}"))),
     )),
 
