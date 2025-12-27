@@ -1,5 +1,10 @@
 [
   {
+    "type": "code",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "description",
     "named": true,
     "fields": {
@@ -45,6 +50,10 @@
       "required": false,
       "types": [
         {
+          "type": "code",
+          "named": true
+        },
+        {
           "type": "comment",
           "named": true
         },
@@ -54,10 +63,6 @@
         },
         {
           "type": "markdown",
-          "named": true
-        },
-        {
-          "type": "r_code",
           "named": true
         }
       ]
@@ -104,11 +109,6 @@
     "fields": {}
   },
   {
-    "type": "r_code",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "tag",
     "named": true,
     "fields": {},
@@ -117,7 +117,7 @@
       "required": true,
       "types": [
         {
-          "type": "comment",
+          "type": "code",
           "named": true
         },
         {
@@ -126,10 +126,6 @@
         },
         {
           "type": "parameter",
-          "named": true
-        },
-        {
-          "type": "r_code",
           "named": true
         },
         {

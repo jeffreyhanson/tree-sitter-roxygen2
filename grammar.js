@@ -10,7 +10,7 @@ const PREC = {
   PARENTHESIS: { ASSOC: prec, RANK: -2},
   PUNCTUATION: { ASSOC: prec, RANK: -1},
   // comments
-  COMMENT: { ASSOC: prec, RANK: 100},
+  COMMENT: { ASSOC: prec, RANK: 1},
 }
 
 export default grammar({
@@ -88,7 +88,7 @@ export default grammar({
 
     _generic_tag_with_multiple_parameters: $ => seq(
       alias($._tag_name_with_multiple_parameters, $.tag_name),
-      optional(repeat1($.parameter)),
+      repeat($.parameter),
     ),
 
     _tag_name_with_multiple_parameters: _ => token(choice(
@@ -122,7 +122,7 @@ export default grammar({
 
     _section_tag: $ => seq(
       alias($._section_tag_name, $.tag_name),
-      optional(repeat1($.parameter)),
+      repeat($.parameter),
       optional(":"),
       optional($.description),
     ),
@@ -131,7 +131,7 @@ export default grammar({
 
     _examples_tag: $ => seq(
       alias($._examples_tag_name, $.tag_name),
-      optional(repeat1(choice($.comment, alias($._example_r_code, $.r_code)))),
+      optional($._example_code_chunk),
     ),
 
     _examples_tag_name: _ => token(choice(
@@ -147,35 +147,38 @@ export default grammar({
     // R code chunks
     _link_code_chunk: $ => seq(
       field("open", "["),
-      optional(alias($._link_r_code, $.r_code)),
+      optional(alias($._link_code, $.code)),
       optional(field("close", token.immediate("]"))),
     ),
 
     _inline_code_chunk: $ => seq(
       field("open", "`"),
-      optional(alias($._inline_r_code, $.r_code)),
+      optional(alias($._inline_code, $.code)),
       optional(field("close", token.immediate("`"))),
     ),
 
     _fenced_code_chunk: $ => seq(
       field("open", "```"),
-      optional(repeat1(choice($.comment, alias($._fenced_r_code, $.r_code)))),
+      repeat(choice($.comment, alias($._fenced_code, $.code))),
       optional(field("close", token.immediate("```"))),
+    ),
+
+    _example_code_chunk: $ => repeat1(
+      alias($._example_code, $.code),
     ),
 
     // basic tokens
     _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
-    number: $ => /\d+/,
     tag_name: $ => /@[a-zA-Z_]+/,
     parameter: $ => /[a-zA-Z_$][a-zA-Z_$0-9]+/,
     macro: $ => /\\[a-zA-Z_][a-zA-Z_$0-9]+/,
     comment: $ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 
-     // R code tokens
-    _inline_r_code: $ => token.immediate(/[^\`\n]+/),
-    _link_r_code: $ => token.immediate(/[^\]\n]+/),
-    _fenced_r_code: $ => token.immediate(/[^\`\n]+/),
-    _example_r_code: $ => token.immediate(/[^\n]+/),
+     // code tokens
+    _inline_code: $ => token.immediate(/[^\`\n]+/),
+    _link_code: $ => token.immediate(/[^\]\n]+/),
+    _fenced_code: $ => token.immediate(/[^\`\n]+/),
+    _example_code: $ => token(withPrec(PREC.TEXT, /[^\n\r]*/)),
 
     // bracket symbols
     _open_brace: _ => token(withPrec(PREC.BRACE, "{")),
