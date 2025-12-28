@@ -4,6 +4,7 @@
 const PREC = {
   // text
   TEXT: { ASSOC: prec, RANK: -100},
+  CODE: { ASSOC: prec, RANK: -99},
   // symbols
   BRACE: { ASSOC: prec, RANK: -4},
   BRACKET: { ASSOC: prec, RANK: -3},
@@ -194,20 +195,20 @@ export default grammar({
 
     // basic tokens
     _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
-    _text_no_braces: $ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
-    _text_no_parentheses: $ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
-    _text_no_brackets: $ => token(withPrec(PREC.TEXT, /[^\{\}\(\)\s\n\r]*/)),
-    comment: $ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
+    _text_no_braces: _ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
+    _text_no_parentheses: _ => token(withPrec(PREC.TEXT, /[^\[\]\(\)\s\n\r]*/)),
+    _text_no_brackets: _ => token(withPrec(PREC.TEXT, /[^\{\}\(\)\s\n\r]*/)),
+    comment: _ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 
     // identifier tokens
     tag_name: $ => /@[a-zA-Z_]+/,
-    parameter: $ => /[a-zA-Z\.\$\_0-9]+/,
-    macro: $ => /\\[a-zA-Z]+/,
+    parameter: $ => token(/[a-zA-Z\.\$\_0-9]+/),
+    macro: $ => token(/\\[a-zA-Z]+/),
 
      // code tokens
-    _inline_code: $ => token.immediate(/[^\`\n\r]+/),
-    _link_code: $ => token.immediate(/[^\]\`\n\r]+/),
-    _block_code: $ => token(withPrec(PREC.TEXT, /[^\n\r]*/)),
+    _inline_code: $ => withPrec(PREC.CODE, token.immediate(/[^\`\n\r]+/)),
+    _link_code: $ => withPrec(PREC.CODE, token.immediate(/[^\]\`\n\r]+/)),
+    _block_code: $ => token(withPrec(PREC.CODE, /[^\n\r]*/)),
 
     // bracket symbols
     _open_brace: _ => token(withPrec(PREC.BRACE, "{")),

@@ -812,32 +812,46 @@
       "value": "@[a-zA-Z_]+"
     },
     "parameter": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z\\.\\$\\_0-9]+"
-    },
-    "macro": {
-      "type": "PATTERN",
-      "value": "\\\\[a-zA-Z]+"
-    },
-    "_inline_code": {
-      "type": "IMMEDIATE_TOKEN",
+      "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[^\\`\\n\\r]+"
+        "value": "[a-zA-Z\\.\\$\\_0-9]+"
+      }
+    },
+    "macro": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "\\\\[a-zA-Z]+"
+      }
+    },
+    "_inline_code": {
+      "type": "PREC",
+      "value": -99,
+      "content": {
+        "type": "IMMEDIATE_TOKEN",
+        "content": {
+          "type": "PATTERN",
+          "value": "[^\\`\\n\\r]+"
+        }
       }
     },
     "_link_code": {
-      "type": "IMMEDIATE_TOKEN",
+      "type": "PREC",
+      "value": -99,
       "content": {
-        "type": "PATTERN",
-        "value": "[^\\]\\`\\n\\r]+"
+        "type": "IMMEDIATE_TOKEN",
+        "content": {
+          "type": "PATTERN",
+          "value": "[^\\]\\`\\n\\r]+"
+        }
       }
     },
     "_block_code": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": -100,
+        "value": -99,
         "content": {
           "type": "PATTERN",
           "value": "[^\\n\\r]*"
