@@ -4,7 +4,8 @@
 const PREC = {
   // text
   TEXT: { ASSOC: prec, RANK: -100},
-  CODE: { ASSOC: prec, RANK: -99},
+  TEXT_BLOCK: { ASSOC: prec, RANK: -99},
+  CODE: { ASSOC: prec, RANK: -98},
   // symbols
   BRACE: { ASSOC: prec, RANK: -4},
   BRACKET: { ASSOC: prec, RANK: -3},
@@ -16,10 +17,6 @@ const PREC = {
 
 export default grammar({
   name: "roxygen2",
-
-  conflicts: $ => [
-    [$.markdown],
-  ],
 
   extras: $ => [
     $.comment,
@@ -46,7 +43,7 @@ export default grammar({
     )),
 
     markdown: $ => choice(
-      repeat1($._text),
+      $._block_text,
       $.punctuation,
     ),
 
@@ -205,7 +202,8 @@ export default grammar({
     ),
 
     // basic tokens
-    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
+    _block_text: $ => withPrec(PREC.TEXT_BLOCK, repeat1($._text)),
+    _text: _ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     comment: _ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 
     // identifier tokens
