@@ -36,7 +36,7 @@ export default grammar({
       $._link_element,
       $._formatted_link_element,
       // $._external_link_element,
-      // $._inline_code_chunk,
+      $._inline_code_chunk,
       $._fenced_code_chunk,
       $.macro,
       $.markdown,
@@ -182,11 +182,11 @@ export default grammar({
     // ),
 
     // R code chunks
-    // _inline_code_chunk: $ => seq(
-    //   field("open", "`"),
-    //   optional(alias($._inline_code, $.code)),
-    //   optional(field("close", token.immediate("`"))),
-    // ),
+    _inline_code_chunk: $ => seq(
+      field("open", "`"),
+      optional(alias($._inline_code, $.code)),
+      optional(field("close", token.immediate("`"))),
+    ),
 
     _fenced_code_chunk: $ => prec.left(seq(
       field("open", "```"),
