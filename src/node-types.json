@@ -62,10 +62,6 @@
           "named": true
         },
         {
-          "type": "comment",
-          "named": true
-        },
-        {
           "type": "macro",
           "named": true
         },

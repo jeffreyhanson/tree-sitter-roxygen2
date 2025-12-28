@@ -4,22 +4,31 @@
 const PREC = {
   // text
   TEXT: { ASSOC: prec, RANK: -100},
-  CODE: { ASSOC: prec, RANK: -99},
+  MARKDOWN: { ASSOC: prec, RANK: -98},
+  CODE: { ASSOC: prec, RANK: 5},
   // symbols
   BRACE: { ASSOC: prec, RANK: -4},
   BRACKET: { ASSOC: prec, RANK: -3},
   PARENTHESIS: { ASSOC: prec, RANK: -2},
   PUNCTUATION: { ASSOC: prec, RANK: -1},
+  // description elements
+  PUNCTUATION: { ASSOC: prec, RANK: 0},
+  LINK_ELEMENT: { ASSOC: prec, RANK: 0},
+  CODE_CHUNK: { ASSOC: prec, RANK: 100},
+  MACRO: { ASSOC: prec, RANK: 0},
+  // tag elements
+  DESCRIPTION: { ASSOC: prec, RANK: 0},
+  PARAMETER: { ASSOC: prec, RANK: 0},
+  TAG_NAME: { ASSOC: prec, RANK: 0},
+  // roxygen2 tags
+  TAG: { ASSOC: prec, RANK: 0},
+
   // comments
-  COMMENT: { ASSOC: prec, RANK: 1},
+  COMMENT: { ASSOC: prec, RANK: 1000},
 }
 
 export default grammar({
   name: "roxygen2",
-
-  conflicts: $ => [
-    [$.markdown],
-  ],
 
   extras: $ => [
     $.comment,
@@ -35,7 +44,7 @@ export default grammar({
       repeat($.tag),
     ),
 
-    description: $ => repeat1(choice(
+    description: $ => withPrec(PREC.DESCRIPTION, repeat1(choice(
       $._link_element,
       $._formatted_link_element,
       // $._external_link_element,
@@ -43,12 +52,14 @@ export default grammar({
       $._fenced_code_chunk,
       $.macro,
       $.markdown,
-    )),
+      // Note that this is needed for descriptions that span multiple lines
+      // $.comment,
+    ))),
 
-    markdown: $ => choice(
+    markdown: $=> withPrec(PREC.MARKDOWN, choice(
       repeat1($._text),
-      $.punctuation,
-    ),
+      $.punctuation
+    )),
 
     punctuation: $ => withPrec(PREC.PUNCTUATION, choice(
       $._open_brace,
@@ -60,22 +71,22 @@ export default grammar({
     )),
 
     // roxygen2 tags
-    tag: $ => choice(
+    tag: $ => withPrec(PREC.TAG, choice(
       $._generic_tag_with_single_parameter,
       $._generic_tag_with_multiple_parameters,
       $._generic_tag_with_no_parameters,
       $._section_tag,
       $._examples_tag,
       $._default_tag,
-    ),
+    )),
 
-    _generic_tag_with_single_parameter: $ => seq(
+    _generic_tag_with_single_parameter: $ => withPrec(PREC.TAG, seq(
       alias($._tag_name_with_single_parameter, $.tag_name),
       optional($.parameter),
       optional($.description),
-    ),
+    )),
 
-    _tag_name_with_single_parameter: _ => token(choice(
+    _tag_name_with_single_parameter: _ => token(withPrec(PREC.TAG, choice(
       "@param",
       "@slot",
       "@field",
@@ -91,9 +102,9 @@ export default grammar({
       "@includeRmd",
       "@template",
       "@backref",
-    )),
+    ))),
 
-    _generic_tag_with_multiple_parameters: $ => seq(
+    _generic_tag_with_multiple_parameters: $ => withPrec(PREC.TAG, seq(
       alias($._tag_name_with_multiple_parameters, $.tag_name),
       optional(repeat1($.parameter)),
       // Note that the following is a hack to ensure that we get correct
@@ -103,7 +114,7 @@ export default grammar({
       // a description.
       optional($.comment),
       optional($.description),
-    ),
+    )),
 
     _tag_name_with_multiple_parameters: _ => token(choice(
       "@keywords",
@@ -114,10 +125,10 @@ export default grammar({
       "@include",
     )),
 
-    _generic_tag_with_no_parameters: $ => seq(
+    _generic_tag_with_no_parameters: $ => withPrec(PREC.TAG, seq(
       alias($._tag_name_with_no_parameters, $.tag_name),
       optional($.description),
-    ),
+    )),
 
     _tag_name_with_no_parameters: _ => token(choice(
       "@description",
@@ -137,42 +148,43 @@ export default grammar({
       "@noMd",
     )),
 
-    _section_tag: $ => seq(
+    _section_tag: $ => withPrec(PREC.TAG, seq(
       alias($._section_tag_name, $.tag_name),
       repeat($.parameter),
       optional(":"),
       optional($.description),
-    ),
+    )),
 
     _section_tag_name: _ => token("@section"),
 
-    _examples_tag: $ => seq(
+    _examples_tag: $ => withPrec(PREC.COMMENT, seq(
       alias($._examples_tag_name, $.tag_name),
-      optional($._block_code_chunk),
-    ),
+      optional($.comment),
+      $._block_code_chunk,
+    )),
 
     _examples_tag_name: _ => token(choice(
       "@examples",
       "@examplesIf",
     )),
 
-    _default_tag: $ => seq(
+    _default_tag: $ => withPrec(PREC.TAG, seq(
       $.tag_name,
       optional($.description)
-    ),
+    )),
 
     // Brackets
-    _link_element: $ => seq(
+    _link_element: $ => withPrec(PREC.LINK_ELEMENT, seq(
       field("open", "["),
       optional(alias($._link_code, $.code)),
       optional(field("close", token.immediate("]"))),
-    ),
+    )),
 
-    _formatted_link_element: $ => seq(
+    _formatted_link_element: $ => withPrec(PREC.LINK_ELEMENT, seq(
       field("open", "[`"),
       optional(alias($._link_code, $.code)),
       optional(field("close", token.immediate("`]"))),
-    ),
+    )),
 
     // _external_link_element: $ => seq(
     //   field("open", "["),
@@ -184,28 +196,29 @@ export default grammar({
     // ),
 
     // R code chunks
-    _inline_code_chunk: $ => seq(
+    _inline_code_chunk: $ => withPrec(PREC.CODE_CHUNK, seq(
       field("open", "`"),
       optional(alias($._inline_code, $.code)),
       optional(field("close", token.immediate("`"))),
-    ),
+    )),
 
-    _fenced_code_chunk: $ => seq(
+    _fenced_code_chunk: $ => prec.left(withPrec(PREC.CODE_CHUNK, seq(
       field("open", "```"),
-      optional(repeat1(alias($._block_code, $.code))),
+      optional(repeat1(choice(alias($._block_code, $.code)))),
       field("close", "```"),
-    ),
+    ))),
 
-    _block_code_chunk: $ => repeat1(
+    _block_code_chunk: $ => withPrec(PREC.CODE_CHUNK, repeat1(
       choice(
         seq($.macro, $.punctuation),
         alias($._block_code, $.code),
-        $.punctuation
+        $.punctuation,
+        $.comment
       )
-    ),
+    )),
 
     // basic tokens
-    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
+    _text: $ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s]+/)),
     comment: _ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 
     // identifier tokens
