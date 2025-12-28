@@ -629,32 +629,40 @@
       ]
     },
     "_fenced_code_chunk": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "open",
-          "content": {
-            "type": "STRING",
-            "value": "```"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "open",
+            "content": {
+              "type": "STRING",
+              "value": "```"
+            }
+          },
+          {
             "type": "SYMBOL",
-            "name": "markdown"
+            "name": "comment"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "markdown"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "close",
+            "content": {
+              "type": "STRING",
+              "value": "```"
+            }
           }
-        },
-        {
-          "type": "FIELD",
-          "name": "close",
-          "content": {
-            "type": "STRING",
-            "value": "```"
-          }
-        }
-      ]
+        ]
+      }
     },
     "_block_code_chunk": {
       "type": "REPEAT1",

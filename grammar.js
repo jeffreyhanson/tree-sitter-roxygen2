@@ -188,12 +188,13 @@ export default grammar({
     //   optional(field("close", token.immediate("`"))),
     // ),
 
-    _fenced_code_chunk: $ => seq(
+    _fenced_code_chunk: $ => prec.left(seq(
       field("open", "```"),
       // optional(repeat1(alias($._block_code, $.code))),
+      $.comment,
       repeat($.markdown),
       field("close", "```"),
-    ),
+    )),
 
     _block_code_chunk: $ => repeat1(
       choice(
