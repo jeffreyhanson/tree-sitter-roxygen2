@@ -195,10 +195,10 @@ export default grammar({
     // Note that prec.left() is needed here to avoid memory leaks in Zed,
     // and these memory leaks do not appear in the tree sitter playground
     _fenced_code_chunk: $ => prec.left(seq(
-      field("open", "```"),
+      alias(field("open", "```"), $.markdown),
       $.comment,
       repeat(alias($._block_code, $.code)),
-      field("close", "```"),
+      alias(field("close", "```"), $.markdown),
     )),
 
     _block_code_chunk: $ => repeat1(

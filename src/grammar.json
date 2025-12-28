@@ -696,12 +696,17 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "FIELD",
-            "name": "open",
+            "type": "ALIAS",
             "content": {
-              "type": "STRING",
-              "value": "```"
-            }
+              "type": "FIELD",
+              "name": "open",
+              "content": {
+                "type": "STRING",
+                "value": "```"
+              }
+            },
+            "named": true,
+            "value": "markdown"
           },
           {
             "type": "SYMBOL",
@@ -720,12 +725,17 @@
             }
           },
           {
-            "type": "FIELD",
-            "name": "close",
+            "type": "ALIAS",
             "content": {
-              "type": "STRING",
-              "value": "```"
-            }
+              "type": "FIELD",
+              "name": "close",
+              "content": {
+                "type": "STRING",
+                "value": "```"
+              }
+            },
+            "named": true,
+            "value": "markdown"
           }
         ]
       }

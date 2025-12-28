@@ -105,7 +105,7 @@ static const char * const ts_symbol_names[] = {
   [anon_sym_BQUOTE_RBRACK] = "`]",
   [anon_sym_BQUOTE] = "`",
   [anon_sym_BQUOTE2] = "`",
-  [anon_sym_BQUOTE_BQUOTE_BQUOTE] = "```",
+  [anon_sym_BQUOTE_BQUOTE_BQUOTE] = "markdown",
   [sym_comment] = "comment",
   [sym_tag_name] = "tag_name",
   [sym_parameter] = "parameter",
@@ -169,7 +169,7 @@ static const TSSymbol ts_symbol_map[] = {
   [anon_sym_BQUOTE_RBRACK] = anon_sym_BQUOTE_RBRACK,
   [anon_sym_BQUOTE] = anon_sym_BQUOTE,
   [anon_sym_BQUOTE2] = anon_sym_BQUOTE,
-  [anon_sym_BQUOTE_BQUOTE_BQUOTE] = anon_sym_BQUOTE_BQUOTE_BQUOTE,
+  [anon_sym_BQUOTE_BQUOTE_BQUOTE] = sym_markdown,
   [sym_comment] = sym_comment,
   [sym_tag_name] = sym_tag_name,
   [sym_parameter] = sym_parameter,
@@ -277,7 +277,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
   },
   [anon_sym_BQUOTE_BQUOTE_BQUOTE] = {
     .visible = true,
-    .named = false,
+    .named = true,
   },
   [sym_comment] = {
     .visible = true,
