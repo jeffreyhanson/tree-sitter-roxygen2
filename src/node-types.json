@@ -13,18 +13,6 @@
         "required": false,
         "types": [
           {
-            "type": "]",
-            "named": false
-          },
-          {
-            "type": "`",
-            "named": false
-          },
-          {
-            "type": "`]",
-            "named": false
-          },
-          {
             "type": "markdown",
             "named": true
           }
@@ -34,18 +22,6 @@
         "multiple": true,
         "required": false,
         "types": [
-          {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "[`",
-            "named": false
-          },
-          {
-            "type": "`",
-            "named": false
-          },
           {
             "type": "markdown",
             "named": true
@@ -181,23 +157,7 @@
     "named": false
   },
   {
-    "type": "[`",
-    "named": false
-  },
-  {
     "type": "]",
-    "named": false
-  },
-  {
-    "type": "`",
-    "named": false
-  },
-  {
-    "type": "`]",
-    "named": false
-  },
-  {
-    "type": "```",
     "named": false
   },
   {
