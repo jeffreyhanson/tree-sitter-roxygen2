@@ -46,7 +46,8 @@ export default grammar({
     )),
 
     markdown: $ => choice(
-      repeat1($._text),
+      // repeat1($._text),
+      $._text,
       $.punctuation,
     ),
 
