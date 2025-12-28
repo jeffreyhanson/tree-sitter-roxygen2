@@ -649,8 +649,13 @@
           {
             "type": "REPEAT",
             "content": {
-              "type": "SYMBOL",
-              "name": "markdown"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_block_code"
+              },
+              "named": true,
+              "value": "code"
             }
           },
           {

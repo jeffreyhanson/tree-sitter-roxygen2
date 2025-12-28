@@ -190,9 +190,8 @@ export default grammar({
 
     _fenced_code_chunk: $ => prec.left(seq(
       field("open", "```"),
-      // optional(repeat1(alias($._block_code, $.code))),
       $.comment,
-      repeat($.markdown),
+      repeat(alias($._block_code, $.code)),
       field("close", "```"),
     )),
 
