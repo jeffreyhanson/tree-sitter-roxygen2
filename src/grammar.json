@@ -101,6 +101,14 @@
           {
             "type": "SYMBOL",
             "name": "_close_parenthesis"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_back_tick"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_triple_back_tick"
           }
         ]
       }
@@ -901,6 +909,28 @@
         "content": {
           "type": "STRING",
           "value": ")"
+        }
+      }
+    },
+    "_back_tick": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -6,
+        "content": {
+          "type": "STRING",
+          "value": "`"
+        }
+      }
+    },
+    "_triple_back_tick": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -6,
+        "content": {
+          "type": "STRING",
+          "value": "```"
         }
       }
     }

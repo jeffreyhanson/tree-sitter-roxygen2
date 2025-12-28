@@ -7,6 +7,8 @@ const PREC = {
   TEXT_BLOCK: { ASSOC: prec, RANK: -99},
   CODE: { ASSOC: prec, RANK: -98},
   // symbols
+  BACK_TICK: { ASSOC: prec, RANK: -6},
+  TRIPLE_BACK_TICK: { ASSOC: prec, RANK: -5},
   BRACE: { ASSOC: prec, RANK: -4},
   BRACKET: { ASSOC: prec, RANK: -3},
   PARENTHESIS: { ASSOC: prec, RANK: -2},
@@ -55,6 +57,8 @@ export default grammar({
       $._close_bracket,
       $._open_parenthesis,
       $._close_parenthesis,
+      $._back_tick,
+      $._triple_back_tick,
     )),
 
     // roxygen2 tags
@@ -188,6 +192,8 @@ export default grammar({
       optional(field("close", token.immediate("`"))),
     ),
 
+    // Note that prec.left() is needed here to avoid memory leaks in Zed,
+    // and these memory leaks do not appear in the tree sitter playground
     _fenced_code_chunk: $ => prec.left(seq(
       field("open", "```"),
       $.comment,
@@ -225,6 +231,8 @@ export default grammar({
     _close_bracket: _ => token(withPrec(PREC.BRACKET, "]")),
     _open_parenthesis: _ => token(withPrec(PREC.PARENTHESIS, "(")),
     _close_parenthesis: _ => token(withPrec(PREC.PARENTHESIS, ")")),
+    _back_tick: _ => token(withPrec(PREC.BACK_TICK, "`")),
+    _triple_back_tick: _ => token(withPrec(PREC.BACK_TICK, "```")),
 
   }
 })
