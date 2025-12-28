@@ -63,8 +63,11 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_text"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_text"
+          }
         },
         {
           "type": "SYMBOL",
