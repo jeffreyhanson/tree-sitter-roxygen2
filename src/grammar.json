@@ -548,7 +548,7 @@
             }
           },
           "named": true,
-          "value": "punctuation"
+          "value": "markdown"
         },
         {
           "type": "CHOICE",
@@ -584,7 +584,7 @@
                 }
               },
               "named": true,
-              "value": "punctuation"
+              "value": "markdown"
             },
             {
               "type": "BLANK"

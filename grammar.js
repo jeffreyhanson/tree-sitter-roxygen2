@@ -163,9 +163,9 @@ export default grammar({
 
     // Brackets
     _link_element: $ => seq(
-      alias(field("open", "["), $.punctuation),
+      alias(field("open", "["), $.markdown),
       optional(alias($._link_code, $.code)),
-      optional(alias(field("close", token.immediate("]")), $.punctuation)),
+      optional(alias(field("close", token.immediate("]")), $.markdown)),
     ),
 
     _formatted_link_element: $ => seq(

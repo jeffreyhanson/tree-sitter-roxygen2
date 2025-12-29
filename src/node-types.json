@@ -13,6 +13,10 @@
         "required": false,
         "types": [
           {
+            "type": "markdown",
+            "named": true
+          },
+          {
             "type": "punctuation",
             "named": true
           }
@@ -22,6 +26,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "markdown",
+            "named": true
+          },
           {
             "type": "punctuation",
             "named": true
