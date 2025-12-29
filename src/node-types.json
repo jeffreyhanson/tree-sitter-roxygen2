@@ -15,10 +15,6 @@
           {
             "type": "markdown",
             "named": true
-          },
-          {
-            "type": "punctuation",
-            "named": true
           }
         ]
       },
@@ -28,10 +24,6 @@
         "types": [
           {
             "type": "markdown",
-            "named": true
-          },
-          {
-            "type": "punctuation",
             "named": true
           }
         ]

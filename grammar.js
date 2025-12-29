@@ -169,9 +169,9 @@ export default grammar({
     ),
 
     _formatted_link_element: $ => seq(
-      alias(field("open", "[`"), $.punctuation),
+      alias(field("open", "[`"), $.markdown),
       optional(alias($._link_code, $.code)),
-      optional(alias(field("close", token.immediate("`]")), $.punctuation)),
+      optional(alias(field("close", token.immediate("`]")), $.markdown)),
     ),
 
     // _external_link_element: $ => seq(
@@ -185,18 +185,18 @@ export default grammar({
 
     // R code chunks
     _inline_code_chunk: $ => seq(
-      alias(field("open", "`"), $.punctuation),
+      alias(field("open", "`"), $.markdown),
       optional(alias($._inline_code, $.code)),
-      optional(alias(field("close", token.immediate("`")), $.punctuation)),
+      optional(alias(field("close", token.immediate("`")), $.markdown)),
     ),
 
     // Note that prec.left() is needed here to avoid memory leaks in Zed,
     // and these memory leaks do not appear in the tree sitter playground
     _fenced_code_chunk: $ => prec.left(seq(
-      alias(field("open", "```"), $.punctuation),
+      alias(field("open", "```"), $.markdown),
       $.comment,
       repeat(alias($._block_code, $.code)),
-      alias(field("close", "```"), $.punctuation),
+      alias(field("close", "```"), $.markdown),
     )),
 
     _block_code_chunk: $ => repeat1(

@@ -607,7 +607,7 @@
             }
           },
           "named": true,
-          "value": "punctuation"
+          "value": "markdown"
         },
         {
           "type": "CHOICE",
@@ -643,7 +643,7 @@
                 }
               },
               "named": true,
-              "value": "punctuation"
+              "value": "markdown"
             },
             {
               "type": "BLANK"
@@ -666,7 +666,7 @@
             }
           },
           "named": true,
-          "value": "punctuation"
+          "value": "markdown"
         },
         {
           "type": "CHOICE",
@@ -702,7 +702,7 @@
                 }
               },
               "named": true,
-              "value": "punctuation"
+              "value": "markdown"
             },
             {
               "type": "BLANK"
@@ -728,7 +728,7 @@
               }
             },
             "named": true,
-            "value": "punctuation"
+            "value": "markdown"
           },
           {
             "type": "SYMBOL",
@@ -757,7 +757,7 @@
               }
             },
             "named": true,
-            "value": "punctuation"
+            "value": "markdown"
           }
         ]
       }
