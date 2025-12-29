@@ -7,6 +7,7 @@ const PREC = {
   TEXT_BLOCK: { ASSOC: prec, RANK: -99},
   CODE: { ASSOC: prec, RANK: -98},
   // symbols
+  BACK_TICK: { ASSOC: prec, RANK: -5},
   BRACE: { ASSOC: prec, RANK: -4},
   BRACKET: { ASSOC: prec, RANK: -3},
   PARENTHESIS: { ASSOC: prec, RANK: -2},
@@ -55,6 +56,7 @@ export default grammar({
       $._close_bracket,
       $._open_parenthesis,
       $._close_parenthesis,
+      // $._back_tick,
     )),
 
     // roxygen2 tags
@@ -161,15 +163,15 @@ export default grammar({
 
     // Brackets
     _link_element: $ => seq(
-      alias(field("open", "["), $.markdown),
+      alias(field("open", "["), $.punctuation),
       optional(alias($._link_code, $.code)),
-      optional(alias(field("close", token.immediate("]")), $.markdown)),
+      optional(alias(field("close", token.immediate("]")), $.punctuation)),
     ),
 
     _formatted_link_element: $ => seq(
-      alias(field("open", "[`"), $.markdown),
+      alias(field("open", "[`"), $.punctuation),
       optional(alias($._link_code, $.code)),
-      optional(alias(field("close", token.immediate("`]")), $.markdown)),
+      optional(alias(field("close", token.immediate("`]")), $.punctuation)),
     ),
 
     // _external_link_element: $ => seq(
@@ -183,18 +185,18 @@ export default grammar({
 
     // R code chunks
     _inline_code_chunk: $ => seq(
-      alias(field("open", "`"), $.markdown),
+      alias(field("open", "`"), $.punctuation),
       optional(alias($._inline_code, $.code)),
-      optional(alias(field("close", token.immediate("`")), $.markdown)),
+      optional(alias(field("close", token.immediate("`")), $.punctuation)),
     ),
 
     // Note that prec.left() is needed here to avoid memory leaks in Zed,
     // and these memory leaks do not appear in the tree sitter playground
     _fenced_code_chunk: $ => prec.left(seq(
-      alias(field("open", "```"), $.markdown),
+      alias(field("open", "```"), $.punctuation),
       $.comment,
       repeat(alias($._block_code, $.code)),
-      alias(field("close", "```"), $.markdown),
+      alias(field("close", "```"), $.punctuation),
     )),
 
     _block_code_chunk: $ => repeat1(
@@ -227,6 +229,7 @@ export default grammar({
     _close_bracket: _ => token(withPrec(PREC.BRACKET, "]")),
     _open_parenthesis: _ => token(withPrec(PREC.PARENTHESIS, "(")),
     _close_parenthesis: _ => token(withPrec(PREC.PARENTHESIS, ")")),
+    // _back_tick: _ => token(withPrec(PREC.BACK_TICK, "`")),
 
   }
 })

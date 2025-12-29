@@ -13,7 +13,7 @@
         "required": false,
         "types": [
           {
-            "type": "markdown",
+            "type": "punctuation",
             "named": true
           }
         ]
@@ -23,7 +23,7 @@
         "required": false,
         "types": [
           {
-            "type": "markdown",
+            "type": "punctuation",
             "named": true
           }
         ]
