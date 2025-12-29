@@ -51,6 +51,7 @@ export default grammar({
       // $.punctuation,
     ),
 
+
     punctuation: $ => withPrec(PREC.PUNCTUATION, choice(
       $._open_brace,
       $._close_brace,
