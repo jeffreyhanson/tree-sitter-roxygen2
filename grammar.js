@@ -45,8 +45,8 @@ export default grammar({
     )),
 
     markdown: $ => choice(
-      // $._block_text,
-      $._text,
+      $._block_text,
+      // $._text,
       $.punctuation,
     ),
 
@@ -209,7 +209,7 @@ export default grammar({
     ),
 
     // basic tokens
-    // _block_text: $ => prec.left(PREC.TEXT_BLOCK.RANK, repeat1($._text)),
+    _block_text: $ => prec.left(PREC.TEXT_BLOCK.RANK, repeat1($._text)),
     _text: _ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     comment: _ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 

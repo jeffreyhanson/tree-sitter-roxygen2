@@ -64,7 +64,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_text"
+          "name": "_block_text"
         },
         {
           "type": "SYMBOL",
@@ -794,6 +794,17 @@
             "name": "punctuation"
           }
         ]
+      }
+    },
+    "_block_text": {
+      "type": "PREC_LEFT",
+      "value": -99,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SYMBOL",
+          "name": "_text"
+        }
       }
     },
     "_text": {
