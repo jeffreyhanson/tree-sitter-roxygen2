@@ -29,7 +29,7 @@
     },
     "description": {
       "type": "PREC_LEFT",
-      "value": 0,
+      "value": 1,
       "content": {
         "type": "REPEAT1",
         "content": {
@@ -709,7 +709,7 @@
     },
     "_fenced_code_chunk": {
       "type": "PREC_LEFT",
-      "value": 0,
+      "value": 1,
       "content": {
         "type": "SEQ",
         "members": [

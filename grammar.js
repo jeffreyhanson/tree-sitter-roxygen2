@@ -34,7 +34,7 @@ export default grammar({
       repeat($.tag),
     ),
 
-    description: $ => prec.left(repeat1(choice(
+    description: $ => prec.left(1, repeat1(choice(
       $._link_element,
       $._formatted_link_element,
       // $._external_link_element,
@@ -193,7 +193,7 @@ export default grammar({
 
     // Note that prec.left() is needed here to avoid memory leaks in Zed,
     // and these memory leaks do not appear in the tree sitter playground
-    _fenced_code_chunk: $ => prec.left(seq(
+    _fenced_code_chunk: $ => prec.left(1, seq(
       alias(field("open", "```"), $.markdown),
       $.comment,
       repeat(alias($._block_code, $.code)),
