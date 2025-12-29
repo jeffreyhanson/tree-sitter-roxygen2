@@ -55,6 +55,10 @@
           {
             "type": "SYMBOL",
             "name": "markdown"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "punctuation"
           }
         ]
       }
@@ -64,11 +68,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_block_text"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "punctuation"
+          "name": "_text"
         }
       ]
     },
@@ -548,7 +548,7 @@
             }
           },
           "named": true,
-          "value": "markdown"
+          "value": "punctuation"
         },
         {
           "type": "CHOICE",
@@ -584,7 +584,7 @@
                 }
               },
               "named": true,
-              "value": "markdown"
+              "value": "punctuation"
             },
             {
               "type": "BLANK"
@@ -607,7 +607,7 @@
             }
           },
           "named": true,
-          "value": "markdown"
+          "value": "punctuation"
         },
         {
           "type": "CHOICE",
@@ -643,7 +643,7 @@
                 }
               },
               "named": true,
-              "value": "markdown"
+              "value": "punctuation"
             },
             {
               "type": "BLANK"
@@ -666,7 +666,7 @@
             }
           },
           "named": true,
-          "value": "markdown"
+          "value": "punctuation"
         },
         {
           "type": "CHOICE",
@@ -702,7 +702,7 @@
                 }
               },
               "named": true,
-              "value": "markdown"
+              "value": "punctuation"
             },
             {
               "type": "BLANK"

@@ -42,12 +42,13 @@ export default grammar({
       $._fenced_code_chunk,
       $.macro,
       $.markdown,
+      $.punctuation,
     )),
 
     markdown: $ => choice(
-      $._block_text,
-      // $._text,
-      $.punctuation,
+      // $._block_text,
+      $._text,
+      // $.punctuation,
     ),
 
     punctuation: $ => withPrec(PREC.PUNCTUATION, choice(
@@ -164,15 +165,15 @@ export default grammar({
 
     // Brackets
     _link_element: $ => seq(
-      alias(field("open", "["), $.markdown),
+      alias(field("open", "["), $.punctuation),
       optional(alias($._link_code, $.code)),
-      optional(alias(field("close", token.immediate("]")), $.markdown)),
+      optional(alias(field("close", token.immediate("]")), $.punctuation)),
     ),
 
     _formatted_link_element: $ => seq(
-      alias(field("open", "[`"), $.markdown),
+      alias(field("open", "[`"), $.punctuation),
       optional(alias($._link_code, $.code)),
-      optional(alias(field("close", token.immediate("`]")), $.markdown)),
+      optional(alias(field("close", token.immediate("`]")), $.punctuation)),
     ),
 
     // _external_link_element: $ => seq(
@@ -186,9 +187,9 @@ export default grammar({
 
     // R code chunks
     _inline_code_chunk: $ => seq(
-      alias(field("open", "`"), $.markdown),
+      alias(field("open", "`"), $.punctuation),
       optional(alias($._inline_code, $.code)),
-      optional(alias(field("close", token.immediate("`")), $.markdown)),
+      optional(alias(field("close", token.immediate("`")), $.punctuation)),
     ),
 
     // Note that prec.left() is needed here to avoid memory leaks in Zed,
