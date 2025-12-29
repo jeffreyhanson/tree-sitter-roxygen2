@@ -6,6 +6,7 @@ const PREC = {
   TEXT: { ASSOC: prec, RANK: -100},
   TEXT_BLOCK: { ASSOC: prec, RANK: -99},
   CODE: { ASSOC: prec, RANK: -98},
+  CODE_BLOCK: { ASSOC: prec, RANK: -97},
   // symbols
   BACK_TICK: { ASSOC: prec, RANK: -5},
   BRACE: { ASSOC: prec, RANK: -4},
@@ -218,9 +219,10 @@ export default grammar({
     macro: $ => token(/\\[a-zA-Z]+/),
 
      // code tokens
+     _block_code: $=> prec.left(PREC.CODE_BLOCK.RANK, repeat1($._line_code)),
     _inline_code: $ => withPrec(PREC.CODE, token.immediate(/[^\`\n\r]+/)),
     _link_code: $ => withPrec(PREC.CODE, token.immediate(/[^\]\`\n\r]+/)),
-    _block_code: $ => token(withPrec(PREC.CODE, /[^\n\r]*/)),
+    _line_code: $ => token(withPrec(PREC.CODE, /[^\n\r]*/)),
 
     // bracket symbols
     _open_brace: _ => token(withPrec(PREC.BRACE, "{")),

@@ -856,6 +856,17 @@
         "value": "\\\\[a-zA-Z]+"
       }
     },
+    "_block_code": {
+      "type": "PREC_LEFT",
+      "value": -97,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SYMBOL",
+          "name": "_line_code"
+        }
+      }
+    },
     "_inline_code": {
       "type": "PREC",
       "value": -98,
@@ -878,7 +889,7 @@
         }
       }
     },
-    "_block_code": {
+    "_line_code": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",
