@@ -28,43 +28,47 @@
       ]
     },
     "description": {
-      "type": "REPEAT1",
+      "type": "PREC_LEFT",
+      "value": 0,
       "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_link_element"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_formatted_link_element"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_inline_code_chunk"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_fenced_code_chunk"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "macro"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "markdown"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "punctuation"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "comment"
-          }
-        ]
+        "type": "REPEAT1",
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_link_element"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_formatted_link_element"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_inline_code_chunk"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_fenced_code_chunk"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "macro"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "markdown"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "punctuation"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "comment"
+            }
+          ]
+        }
       }
     },
     "markdown": {
@@ -704,51 +708,55 @@
       ]
     },
     "_fenced_code_chunk": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "FIELD",
-            "name": "open",
-            "content": {
-              "type": "STRING",
-              "value": "```"
-            }
-          },
-          "named": true,
-          "value": "markdown"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "comment"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
             "type": "ALIAS",
             "content": {
-              "type": "SYMBOL",
-              "name": "_block_code"
+              "type": "FIELD",
+              "name": "open",
+              "content": {
+                "type": "STRING",
+                "value": "```"
+              }
             },
             "named": true,
-            "value": "code"
-          }
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "FIELD",
-            "name": "close",
+            "value": "markdown"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "comment"
+          },
+          {
+            "type": "REPEAT",
             "content": {
-              "type": "STRING",
-              "value": "```"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_block_code"
+              },
+              "named": true,
+              "value": "code"
             }
           },
-          "named": true,
-          "value": "markdown"
-        }
-      ]
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "FIELD",
+              "name": "close",
+              "content": {
+                "type": "STRING",
+                "value": "```"
+              }
+            },
+            "named": true,
+            "value": "markdown"
+          }
+        ]
+      }
     },
     "_block_code_chunk": {
       "type": "REPEAT1",
