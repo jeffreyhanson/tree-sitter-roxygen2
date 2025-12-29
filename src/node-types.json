@@ -107,10 +107,6 @@
           "named": true
         },
         {
-          "type": "comment",
-          "named": true
-        },
-        {
           "type": "description",
           "named": true
         },

@@ -43,14 +43,12 @@ export default grammar({
       $.macro,
       $.markdown,
       $.punctuation,
+      $.comment,
     )),
 
     markdown: $ => choice(
-      // $._block_text,
-      $._text,
-      // $.punctuation,
+      $._block_text,
     ),
-
 
     punctuation: $ => withPrec(PREC.PUNCTUATION, choice(
       $._open_brace,
@@ -104,7 +102,7 @@ export default grammar({
       // and the last line of one block is a generic tag with multiple
       // parameters and the first line of the subsequent block is
       // a description.
-      optional($.comment),
+      // optional($.comment),
       optional($.description),
     ),
 

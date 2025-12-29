@@ -59,6 +59,10 @@
           {
             "type": "SYMBOL",
             "name": "punctuation"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "comment"
           }
         ]
       }
@@ -68,7 +72,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_text"
+          "name": "_block_text"
         }
       ]
     },
@@ -261,18 +265,6 @@
                 "type": "SYMBOL",
                 "name": "parameter"
               }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "comment"
             },
             {
               "type": "BLANK"
