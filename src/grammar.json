@@ -68,7 +68,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_block_text"
+          "name": "_text"
         }
       ]
     },
