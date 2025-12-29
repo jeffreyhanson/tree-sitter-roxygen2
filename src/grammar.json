@@ -64,7 +64,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_block_text"
+          "name": "_text"
         },
         {
           "type": "SYMBOL",
@@ -796,17 +796,6 @@
         ]
       }
     },
-    "_block_text": {
-      "type": "PREC_LEFT",
-      "value": -99,
-      "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "SYMBOL",
-          "name": "_text"
-        }
-      }
-    },
     "_text": {
       "type": "TOKEN",
       "content": {
@@ -856,17 +845,6 @@
         "value": "\\\\[a-zA-Z]+"
       }
     },
-    "_block_code": {
-      "type": "PREC_LEFT",
-      "value": -97,
-      "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "SYMBOL",
-          "name": "_line_code"
-        }
-      }
-    },
     "_inline_code": {
       "type": "PREC",
       "value": -98,
@@ -889,7 +867,7 @@
         }
       }
     },
-    "_line_code": {
+    "_block_code": {
       "type": "TOKEN",
       "content": {
         "type": "PREC",
