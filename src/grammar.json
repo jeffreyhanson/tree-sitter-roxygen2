@@ -534,8 +534,12 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "internal_link"
+          "type": "FIELD",
+          "name": "external",
+          "content": {
+            "type": "SYMBOL",
+            "name": "internal_link"
+          }
         },
         {
           "type": "ALIAS",

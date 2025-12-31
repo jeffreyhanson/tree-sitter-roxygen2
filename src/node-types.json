@@ -86,6 +86,16 @@
           }
         ]
       },
+      "external": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "internal_link",
+            "named": true
+          }
+        ]
+      },
       "open": {
         "multiple": false,
         "required": true,
@@ -98,13 +108,9 @@
       }
     },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
-        {
-          "type": "internal_link",
-          "named": true
-        },
         {
           "type": "uri",
           "named": true

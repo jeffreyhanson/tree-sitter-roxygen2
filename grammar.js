@@ -26,6 +26,10 @@ export default grammar({
     /\s/, // whitespace
   ],
 
+  // conflicts: $ => [
+  //   [$.external_link, $.internal_link],
+  // ],
+
   word: $ => $._text,
 
   rules: {
@@ -158,7 +162,10 @@ export default grammar({
 
     // Brackets
     external_link: $ => seq(
-      $.internal_link,
+      field("external", $.internal_link),
+      // alias(field("open", "["), $.punctuation),
+      // optional(alias($._block_text, $.markdown)),
+      // alias(field("close", token.immediate("]")), $.punctuation),
       alias(field("open", token.immediate("(")), $.punctuation),
       optional(alias($._block_text, $.uri)),
       alias(field("close", token.immediate(")")), $.punctuation),
