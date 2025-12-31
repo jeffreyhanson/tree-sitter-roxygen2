@@ -34,15 +34,15 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "external_link_element"
+            "name": "external_link"
           },
           {
             "type": "SYMBOL",
-            "name": "internal_link_element"
+            "name": "internal_link"
           },
           {
             "type": "SYMBOL",
-            "name": "_parenthesis_element"
+            "name": "_parenthesis_text"
           },
           {
             "type": "SYMBOL",
@@ -530,12 +530,12 @@
         }
       ]
     },
-    "external_link_element": {
+    "external_link": {
       "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "internal_link_element"
+          "name": "internal_link"
         },
         {
           "type": "ALIAS",
@@ -588,7 +588,7 @@
         }
       ]
     },
-    "internal_link_element": {
+    "internal_link": {
       "type": "SEQ",
       "members": [
         {
@@ -687,7 +687,7 @@
         }
       ]
     },
-    "_parenthesis_element": {
+    "_parenthesis_text": {
       "type": "SEQ",
       "members": [
         {

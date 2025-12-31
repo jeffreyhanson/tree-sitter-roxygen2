@@ -36,9 +36,9 @@ export default grammar({
     ),
 
     description: $ => repeat1(choice(
-      $.external_link_element,
-      $.internal_link_element,
-      $._parenthesis_element,
+      $.external_link,
+      $.internal_link,
+      $._parenthesis_text,
       $._inline_code_chunk,
       $._fenced_code_chunk,
       $.macro,
@@ -157,14 +157,14 @@ export default grammar({
     ),
 
     // Brackets
-    external_link_element: $ => seq(
-      $.internal_link_element,
+    external_link: $ => seq(
+      $.internal_link,
       alias(field("open", token.immediate("(")), $.punctuation),
       optional(alias($._block_text, $.uri)),
       alias(field("close", token.immediate(")")), $.punctuation),
     ),
 
-    internal_link_element: $ => seq(
+    internal_link: $ => seq(
       alias(field("open", "["), $.punctuation),
       optional(alias(token.immediate("`"), $.punctuation)),
       optional(alias($._link_code, $.code)),
@@ -173,7 +173,7 @@ export default grammar({
     ),
 
     // Parenthesis
-    _parenthesis_element: $ => seq(
+    _parenthesis_text: $ => seq(
       alias(field("open", "("), $.punctuation),
       optional(alias($._block_text, $.markdown)),
       alias(field("close", token.immediate(")")), $.punctuation),

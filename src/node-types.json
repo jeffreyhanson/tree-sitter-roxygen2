@@ -50,11 +50,11 @@
           "named": true
         },
         {
-          "type": "external_link_element",
+          "type": "external_link",
           "named": true
         },
         {
-          "type": "internal_link_element",
+          "type": "internal_link",
           "named": true
         },
         {
@@ -73,7 +73,7 @@
     }
   },
   {
-    "type": "external_link_element",
+    "type": "external_link",
     "named": true,
     "fields": {
       "close": {
@@ -102,7 +102,7 @@
       "required": true,
       "types": [
         {
-          "type": "internal_link_element",
+          "type": "internal_link",
           "named": true
         },
         {
@@ -113,7 +113,7 @@
     }
   },
   {
-    "type": "internal_link_element",
+    "type": "internal_link",
     "named": true,
     "fields": {
       "close": {
