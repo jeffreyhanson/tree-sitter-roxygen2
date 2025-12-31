@@ -7,6 +7,7 @@ const PREC = {
   TEXT_BLOCK: { ASSOC: prec, RANK: -99},
   CODE: { ASSOC: prec, RANK: -98},
   CODE_BLOCK: { ASSOC: prec, RANK: -97},
+  PREC_TEXT: { ASSOC: prec, RANK: -96},
   // symbols
   BACK_TICK: { ASSOC: prec, RANK: -5},
   BRACE: { ASSOC: prec, RANK: -4},
@@ -14,7 +15,7 @@ const PREC = {
   PARENTHESIS: { ASSOC: prec, RANK: -2},
   PUNCTUATION: { ASSOC: prec, RANK: -1},
   // comments
-  COMMENT: { ASSOC: prec, RANK: 1},
+  COMMENT: { ASSOC: prec, RANK: 4},
 }
 
 export default grammar({
@@ -35,9 +36,9 @@ export default grammar({
     ),
 
     description: $ => repeat1(choice(
-      $._link_element,
-      $._formatted_link_element,
-      // $._external_link_element,
+      $.external_link_element,
+      $.internal_link_element,
+      $._parenthesis_element,
       $._inline_code_chunk,
       $._fenced_code_chunk,
       $.macro,
@@ -57,7 +58,6 @@ export default grammar({
       $._close_bracket,
       $._open_parenthesis,
       $._close_parenthesis,
-      // $._back_tick,
     )),
 
     // roxygen2 tags
@@ -97,12 +97,6 @@ export default grammar({
     _generic_tag_with_multiple_parameters: $ => seq(
       alias($._tag_name_with_multiple_parameters, $.tag_name),
       optional(repeat1($.parameter)),
-      // Note that the following is a hack to ensure that we get correct
-      // formatting when there is multiple roxygen2 blocks in a file
-      // and the last line of one block is a generic tag with multiple
-      // parameters and the first line of the subsequent block is
-      // a description.
-      // optional($.comment),
       optional($.description),
     ),
 
@@ -163,26 +157,27 @@ export default grammar({
     ),
 
     // Brackets
-    _link_element: $ => seq(
+    external_link_element: $ => seq(
+      $.internal_link_element,
+      alias(field("open", token.immediate("(")), $.punctuation),
+      optional(alias($._block_text, $.uri)),
+      alias(field("close", token.immediate(")")), $.punctuation),
+    ),
+
+    internal_link_element: $ => seq(
       alias(field("open", "["), $.punctuation),
+      optional(alias(token.immediate("`"), $.punctuation)),
       optional(alias($._link_code, $.code)),
+      optional(alias(token.immediate("`"), $.punctuation)),
       optional(alias(field("close", token.immediate("]")), $.punctuation)),
     ),
 
-    _formatted_link_element: $ => seq(
-      alias(field("open", "[`"), $.punctuation),
-      optional(alias($._link_code, $.code)),
-      optional(alias(field("close", token.immediate("`]")), $.punctuation)),
+    // Parenthesis
+    _parenthesis_element: $ => seq(
+      alias(field("open", "("), $.punctuation),
+      optional(alias($._block_text, $.markdown)),
+      alias(field("close", token.immediate(")")), $.punctuation),
     ),
-
-    // _external_link_element: $ => seq(
-    //   field("open", "["),
-    //   alias($._text, $.markdown),
-    //   field("close", token.immediate("]")),
-    //   field("open", "("),
-    //   optional(alias($._text, $.url)),
-    //   optional(field("close", token.immediate(")"))),
-    // ),
 
     // R code chunks
     _inline_code_chunk: $ => seq(
@@ -208,6 +203,7 @@ export default grammar({
 
     // basic tokens
     _block_text: $ => prec.left(PREC.TEXT_BLOCK.RANK, repeat1($._text)),
+    // _prec_text: _ => token(withPrec(PREC.PREC_TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     _text: _ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     comment: _ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 

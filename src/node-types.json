@@ -50,11 +50,99 @@
           "named": true
         },
         {
+          "type": "external_link_element",
+          "named": true
+        },
+        {
+          "type": "internal_link_element",
+          "named": true
+        },
+        {
           "type": "macro",
           "named": true
         },
         {
           "type": "markdown",
+          "named": true
+        },
+        {
+          "type": "punctuation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "external_link_element",
+    "named": true,
+    "fields": {
+      "close": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "punctuation",
+            "named": true
+          }
+        ]
+      },
+      "open": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "punctuation",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "internal_link_element",
+          "named": true
+        },
+        {
+          "type": "uri",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "internal_link_element",
+    "named": true,
+    "fields": {
+      "close": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "punctuation",
+            "named": true
+          }
+        ]
+      },
+      "open": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "punctuation",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "code",
           "named": true
         },
         {
@@ -131,6 +219,11 @@
   },
   {
     "type": "tag_name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "uri",
     "named": true,
     "fields": {}
   },
