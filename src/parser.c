@@ -98,7 +98,7 @@ static const char * const ts_symbol_names[] = {
   [sym__tag_name_with_single_parameter] = "tag_name",
   [sym__tag_name_with_multiple_parameters] = "tag_name",
   [sym__tag_name_with_no_parameters] = "tag_name",
-  [anon_sym_COLON] = ":",
+  [anon_sym_COLON] = "punctuation",
   [anon_sym_ATsection] = "@section",
   [sym__examples_tag_name] = "tag_name",
   [anon_sym_LPAREN] = "punctuation",
@@ -164,7 +164,7 @@ static const TSSymbol ts_symbol_map[] = {
   [sym__tag_name_with_single_parameter] = sym_tag_name,
   [sym__tag_name_with_multiple_parameters] = sym_tag_name,
   [sym__tag_name_with_no_parameters] = sym_tag_name,
-  [anon_sym_COLON] = anon_sym_COLON,
+  [anon_sym_COLON] = sym_punctuation,
   [anon_sym_ATsection] = anon_sym_ATsection,
   [sym__examples_tag_name] = sym_tag_name,
   [anon_sym_LPAREN] = sym_punctuation,
@@ -247,7 +247,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
   },
   [anon_sym_COLON] = {
     .visible = true,
-    .named = false,
+    .named = true,
   },
   [anon_sym_ATsection] = {
     .visible = true,

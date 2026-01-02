@@ -141,7 +141,7 @@ export default grammar({
     _section_tag: $ => seq(
       alias($._section_tag_name, $.tag_name),
       repeat($.parameter),
-      optional(":"),
+      optional(alias(":", $.punctuation)),
       optional($.description),
     ),
 
