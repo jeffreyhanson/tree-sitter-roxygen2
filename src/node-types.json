@@ -78,7 +78,7 @@
     "fields": {
       "close": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "punctuation",
@@ -86,18 +86,8 @@
           }
         ]
       },
-      "external": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "internal_link",
-            "named": true
-          }
-        ]
-      },
       "open": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -108,11 +98,19 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
-          "type": "uri",
+          "type": "link_text",
+          "named": true
+        },
+        {
+          "type": "link_uri",
+          "named": true
+        },
+        {
+          "type": "punctuation",
           "named": true
         }
       ]
@@ -148,7 +146,7 @@
       "required": false,
       "types": [
         {
-          "type": "code",
+          "type": "link_text",
           "named": true
         },
         {
@@ -157,6 +155,16 @@
         }
       ]
     }
+  },
+  {
+    "type": "link_text",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "link_uri",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "markdown",
@@ -225,11 +233,6 @@
   },
   {
     "type": "tag_name",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "uri",
     "named": true,
     "fields": {}
   },

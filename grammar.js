@@ -26,9 +26,11 @@ export default grammar({
     /\s/, // whitespace
   ],
 
-  // conflicts: $ => [
-  //   [$.external_link, $.internal_link],
-  // ],
+  conflicts: $ => [
+    // [$.internal_link, $._start_external_link],
+    // [$._start_external_link, $.internal_link],
+    [$.external_link, $.internal_link],
+  ],
 
   word: $ => $._text,
 
@@ -162,19 +164,18 @@ export default grammar({
 
     // Brackets
     external_link: $ => seq(
-      field("external", $.internal_link),
-      // alias(field("open", "["), $.punctuation),
-      // optional(alias($._block_text, $.markdown)),
-      // alias(field("close", token.immediate("]")), $.punctuation),
-      alias(field("open", token.immediate("(")), $.punctuation),
-      optional(alias($._block_text, $.uri)),
-      alias(field("close", token.immediate(")")), $.punctuation),
+      $._link,
+      alias(field("open", "("), $.punctuation),
+      optional(alias($._block_text, $.link_uri)),
+      alias(field("open", ")"), $.punctuation),
     ),
 
-    internal_link: $ => seq(
+    internal_link: $ => $._link,
+
+    _link: $ => seq(
       alias(field("open", "["), $.punctuation),
       optional(alias(token.immediate("`"), $.punctuation)),
-      optional(alias($._link_code, $.code)),
+      optional(alias($._link_code, $.link_text)),
       optional(alias(token.immediate("`"), $.punctuation)),
       optional(alias(field("close", token.immediate("]")), $.punctuation)),
     ),
@@ -210,7 +211,8 @@ export default grammar({
 
     // basic tokens
     _block_text: $ => prec.left(PREC.TEXT_BLOCK.RANK, repeat1($._text)),
-    // _prec_text: _ => token(withPrec(PREC.PREC_TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
+    _block_prec_text: $ => prec.left(-10, repeat1($._prec_text)),
+    _prec_text: _ => token(withPrec(PREC.PREC_TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     _text: _ => token(withPrec(PREC.TEXT, /[^\[\]\{\}\(\)\s\n\r]*/)),
     comment: _ => token(withPrec(PREC.COMMENT, choice("#'", "//'"))),
 

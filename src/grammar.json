@@ -534,12 +534,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "FIELD",
-          "name": "external",
-          "content": {
-            "type": "SYMBOL",
-            "name": "internal_link"
-          }
+          "type": "SYMBOL",
+          "name": "_link"
         },
         {
           "type": "ALIAS",
@@ -547,11 +543,8 @@
             "type": "FIELD",
             "name": "open",
             "content": {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "STRING",
-                "value": "("
-              }
+              "type": "STRING",
+              "value": "("
             }
           },
           "named": true,
@@ -567,7 +560,7 @@
                 "name": "_block_text"
               },
               "named": true,
-              "value": "uri"
+              "value": "link_uri"
             },
             {
               "type": "BLANK"
@@ -578,13 +571,10 @@
           "type": "ALIAS",
           "content": {
             "type": "FIELD",
-            "name": "close",
+            "name": "open",
             "content": {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "STRING",
-                "value": ")"
-              }
+              "type": "STRING",
+              "value": ")"
             }
           },
           "named": true,
@@ -593,6 +583,10 @@
       ]
     },
     "internal_link": {
+      "type": "SYMBOL",
+      "name": "_link"
+    },
+    "_link": {
       "type": "SEQ",
       "members": [
         {
@@ -638,7 +632,7 @@
                 "name": "_link_code"
               },
               "named": true,
-              "value": "code"
+              "value": "link_text"
             },
             {
               "type": "BLANK"
@@ -893,6 +887,28 @@
         }
       }
     },
+    "_block_prec_text": {
+      "type": "PREC_LEFT",
+      "value": -10,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SYMBOL",
+          "name": "_prec_text"
+        }
+      }
+    },
+    "_prec_text": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -96,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^\\[\\]\\{\\}\\(\\)\\s\\n\\r]*"
+        }
+      }
+    },
     "_text": {
       "type": "TOKEN",
       "content": {
@@ -1052,7 +1068,12 @@
       "value": "\\s"
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    [
+      "external_link",
+      "internal_link"
+    ]
+  ],
   "precedences": [],
   "externals": [],
   "inline": [],
